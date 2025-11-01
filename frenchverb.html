@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>French Verb Matching Game</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        const Shuffle = ({ size = 24 }) => (
+            <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>
+            </svg>
+        );
+        
+        const Award = ({ size = 24 }) => (
+            <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="8" r="6"/>
+                <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+            </svg>
+        );
+
+        const VerbMatchingGame = () => {
+          const allVerbData = {
+            'Aimer': {
+              'PRÉSENT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['aime', 'aimes', 'aime', 'aimons', 'aimez', 'aiment'] },
+              'IMPARFAIT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['aimais', 'aimais', 'aimait', 'aimions', 'aimiez', 'aimaient'] },
+              'PASSÉ COMPOSÉ': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['ai aimé', 'as aimé', 'a aimé', 'avons aimé', 'avez aimé', 'ont aimé'] },
+              'FUTUR SIMPLE': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['aimerai', 'aimeras', 'aimera', 'aimerons', 'aimerez', 'aimeront'] },
+              'CONDITIONNEL': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['aimerais', 'aimerais', 'aimerait', 'aimerions', 'aimeriez', 'aimeraient'] },
+              'SUBJONCTIF': { pronouns: ['que je', 'que tu', "qu'il/elle/on", 'que nous', 'que vous', "qu'ils/elles"], verbs: ['aime', 'aimes', 'aime', 'aimions', 'aimiez', 'aiment'] },
+              'PARTICIPE PRÉSENT': { verbs: ['aimant'] },
+              'PARTICIPE PASSÉ': { verbs: ['aimé'] }
+            },
+            'Commencer': {
+              'PRÉSENT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['commence', 'commences', 'commence', 'commençons', 'commencez', 'commencent'] },
+              'IMPARFAIT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['commençais', 'commençais', 'commençait', 'commencions', 'commenciez', 'commençaient'] },
+              'PASSÉ COMPOSÉ': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['ai commencé', 'as commencé', 'a commencé', 'avons commencé', 'avez commencé', 'ont commencé'] },
+              'FUTUR SIMPLE': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['commencerai', 'commenceras', 'commencera', 'commencerons', 'commencerez', 'commenceront'] },
+              'CONDITIONNEL': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['commencerais', 'commencerais', 'commencerait', 'commencerions', 'commenceriez', 'commenceraient'] },
+              'SUBJONCTIF': { pronouns: ['que je', 'que tu', "qu'il/elle/on", 'que nous', 'que vous', "qu'ils/elles"], verbs: ['commence', 'commences', 'commence', 'commencions', 'commenciez', 'commencent'] },
+              'PARTICIPE PRÉSENT': { verbs: ['commençant'] },
+              'PARTICIPE PASSÉ': { verbs: ['commencé'] }
+            },
+            'Manger': {
+              'PRÉSENT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['mange', 'manges', 'mange', 'mangeons', 'mangez', 'mangent'] },
+              'IMPARFAIT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['mangeais', 'mangeais', 'mangeait', 'mangions', 'mangiez', 'mangeaient'] },
+              'PASSÉ COMPOSÉ': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['ai mangé', 'as mangé', 'a mangé', 'avons mangé', 'avez mangé', 'ont mangé'] },
+              'FUTUR SIMPLE': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['mangerai', 'mangeras', 'mangera', 'mangerons', 'mangerez', 'mangeront'] },
+              'CONDITIONNEL': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['mangerais', 'mangerais', 'mangerait', 'mangerions', 'mangeriez', 'mangeraient'] },
+              'SUBJONCTIF': { pronouns: ['que je', 'que tu', "qu'il/elle/on", 'que nous', 'que vous', "qu'ils/elles"], verbs: ['mange', 'manges', 'mange', 'mangions', 'mangiez', 'mangent'] },
+              'PARTICIPE PRÉSENT': { verbs: ['mangeant'] },
+              'PARTICIPE PASSÉ': { verbs: ['mangé'] }
+            },
+            'Finir': {
+              'PRÉSENT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['finis', 'finis', 'finit', 'finissons', 'finissez', 'finissent'] },
+              'IMPARFAIT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['finissais', 'finissais', 'finissait', 'finissions', 'finissiez', 'finissaient'] },
+              'PASSÉ COMPOSÉ': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['ai fini', 'as fini', 'a fini', 'avons fini', 'avez fini', 'ont fini'] },
+              'FUTUR SIMPLE': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['finirai', 'finiras', 'finira', 'finirons', 'finirez', 'finiront'] },
+              'CONDITIONNEL': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['finirais', 'finirais', 'finirait', 'finirions', 'finiriez', 'finiraient'] },
+              'SUBJONCTIF': { pronouns: ['que je', 'que tu', "qu'il/elle/on", 'que nous', 'que vous', "qu'ils/elles"], verbs: ['finisse', 'finisses', 'finisse', 'finissions', 'finissiez', 'finissent'] },
+              'PARTICIPE PRÉSENT': { verbs: ['finissant'] },
+              'PARTICIPE PASSÉ': { verbs: ['fini'] }
+            },
+            'Prendre': {
+              'PRÉSENT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['prends', 'prends', 'prend', 'prenons', 'prenez', 'prennent'] },
+              'IMPARFAIT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['prenais', 'prenais', 'prenait', 'prenions', 'preniez', 'prenaient'] },
+              'PASSÉ COMPOSÉ': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['ai pris', 'as pris', 'a pris', 'avons pris', 'avez pris', 'ont pris'] },
+              'FUTUR SIMPLE': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['prendrai', 'prendras', 'prendra', 'prendrons', 'prendrez', 'prendront'] },
+              'CONDITIONNEL': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['prendrais', 'prendrais', 'prendrait', 'prendrions', 'prendriez', 'prendraient'] },
+              'SUBJONCTIF': { pronouns: ['que je', 'que tu', "qu'il/elle/on", 'que nous', 'que vous', "qu'ils/elles"], verbs: ['prenne', 'prennes', 'prenne', 'prenions', 'preniez', 'prennent'] },
+              'PARTICIPE PRÉSENT': { verbs: ['prenant'] },
+              'PARTICIPE PASSÉ': { verbs: ['pris'] }
+            },
+            'Avoir': {
+              'PRÉSENT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['ai', 'as', 'a', 'avons', 'avez', 'ont'] },
+              'IMPARFAIT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['avais', 'avais', 'avait', 'avions', 'aviez', 'avaient'] },
+              'PASSÉ COMPOSÉ': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['ai eu', 'as eu', 'a eu', 'avons eu', 'avez eu', 'ont eu'] },
+              'FUTUR SIMPLE': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['aurai', 'auras', 'aura', 'aurons', 'aurez', 'auront'] },
+              'CONDITIONNEL': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['aurais', 'aurais', 'aurait', 'aurions', 'auriez', 'auraient'] },
+              'SUBJONCTIF': { pronouns: ['que je', 'que tu', "qu'il/elle/on", 'que nous', 'que vous', "qu'ils/elles"], verbs: ['aie', 'aies', 'ait', 'ayons', 'ayez', 'aient'] },
+              'PARTICIPE PRÉSENT': { verbs: ['ayant'] },
+              'PARTICIPE PASSÉ': { verbs: ['eu'] }
+            },
+            'Être': {
+              'PRÉSENT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['suis', 'es', 'est', 'sommes', 'êtes', 'sont'] },
+              'IMPARFAIT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['étais', 'étais', 'était', 'étions', 'étiez', 'étaient'] },
+              'PASSÉ COMPOSÉ': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['ai été', 'as été', 'a été', 'avons été', 'avez été', 'ont été'] },
+              'FUTUR SIMPLE': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['serai', 'seras', 'sera', 'serons', 'serez', 'seront'] },
+              'CONDITIONNEL': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['serais', 'serais', 'serait', 'serions', 'seriez', 'seraient'] },
+              'SUBJONCTIF': { pronouns: ['que je', 'que tu', "qu'il/elle/on", 'que nous', 'que vous', "qu'ils/elles"], verbs: ['sois', 'sois', 'soit', 'soyons', 'soyez', 'soient'] },
+              'PARTICIPE PRÉSENT': { verbs: ['étant'] },
+              'PARTICIPE PASSÉ': { verbs: ['été'] }
+            },
+            'Dire': {
+              'PRÉSENT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['dis', 'dis', 'dit', 'disons', 'dites', 'disent'] },
+              'IMPARFAIT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['disais', 'disais', 'disait', 'disions', 'disiez', 'disaient'] },
+              'PASSÉ COMPOSÉ': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['ai dit', 'as dit', 'a dit', 'avons dit', 'avez dit', 'ont dit'] },
+              'FUTUR SIMPLE': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['dirai', 'diras', 'dira', 'dirons', 'direz', 'diront'] },
+              'CONDITIONNEL': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['dirais', 'dirais', 'dirait', 'dirions', 'diriez', 'diraient'] },
+              'SUBJONCTIF': { pronouns: ['que je', 'que tu', "qu'il/elle/on", 'que nous', 'que vous', "qu'ils/elles"], verbs: ['dise', 'dises', 'dise', 'disions', 'disiez', 'disent'] },
+              'PARTICIPE PRÉSENT': { verbs: ['disant'] },
+              'PARTICIPE PASSÉ': { verbs: ['dit'] }
+            },
+            'Pouvoir': {
+              'PRÉSENT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['peux', 'peux', 'peut', 'pouvons', 'pouvez', 'peuvent'] },
+              'IMPARFAIT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['pouvais', 'pouvais', 'pouvait', 'pouvions', 'pouviez', 'pouvaient'] },
+              'PASSÉ COMPOSÉ': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['ai pu', 'as pu', 'a pu', 'avons pu', 'avez pu', 'ont pu'] },
+              'FUTUR SIMPLE': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['pourrai', 'pourras', 'pourra', 'pourrons', 'pourrez', 'pourront'] },
+              'CONDITIONNEL': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['pourrais', 'pourrais', 'pourrait', 'pourrions', 'pourriez', 'pourraient'] },
+              'SUBJONCTIF': { pronouns: ['que je', 'que tu', "qu'il/elle/on", 'que nous', 'que vous', "qu'ils/elles"], verbs: ['puisse', 'puisses', 'puisse', 'puissions', 'puissiez', 'puissent'] },
+              'PARTICIPE PRÉSENT': { verbs: ['pouvant'] },
+              'PARTICIPE PASSÉ': { verbs: ['pu'] }
+            },
+            'Devoir': {
+              'PRÉSENT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['dois', 'dois', 'doit', 'devons', 'devez', 'doivent'] },
+              'IMPARFAIT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['devais', 'devais', 'devait', 'devions', 'deviez', 'devaient'] },
+              'PASSÉ COMPOSÉ': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['ai dû', 'as dû', 'a dû', 'avons dû', 'avez dû', 'ont dû'] },
+              'FUTUR SIMPLE': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['devrai', 'devras', 'devra', 'devrons', 'devrez', 'devront'] },
+              'CONDITIONNEL': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['devrais', 'devrais', 'devrait', 'devrions', 'devriez', 'devraient'] },
+              'SUBJONCTIF': { pronouns: ['que je', 'que tu', "qu'il/elle/on", 'que nous', 'que vous', "qu'ils/elles"], verbs: ['doive', 'doives', 'doive', 'devions', 'deviez', 'doivent'] },
+              'PARTICIPE PRÉSENT': { verbs: ['devant'] },
+              'PARTICIPE PASSÉ': { verbs: ['dû'] }
+            },
+            'Vouloir': {
+              'PRÉSENT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['veux', 'veux', 'veut', 'voulons', 'voulez', 'veulent'] },
+              'IMPARFAIT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['voulais', 'voulais', 'voulait', 'voulions', 'vouliez', 'voulaient'] },
+              'PASSÉ COMPOSÉ': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['ai voulu', 'as voulu', 'a voulu', 'avons voulu', 'avez voulu', 'ont voulu'] },
+              'FUTUR SIMPLE': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['voudrai', 'voudras', 'voudra', 'voudrons', 'voudrez', 'voudront'] },
+              'CONDITIONNEL': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['voudrais', 'voudrais', 'voudrait', 'voudrions', 'voudriez', 'voudraient'] },
+              'SUBJONCTIF': { pronouns: ['que je', 'que tu', "qu'il/elle/on", 'que nous', 'que vous', "qu'ils/elles"], verbs: ['veuille', 'veuilles', 'veuille', 'voulions', 'vouliez', 'veuillent'] },
+              'PARTICIPE PRÉSENT': { verbs: ['voulant'] },
+              'PARTICIPE PASSÉ': { verbs: ['voulu'] }
+            },
+            'Savoir': {
+              'PRÉSENT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['sais', 'sais', 'sait', 'savons', 'savez', 'savent'] },
+              'IMPARFAIT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['savais', 'savais', 'savait', 'savions', 'saviez', 'savaient'] },
+              'PASSÉ COMPOSÉ': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['ai su', 'as su', 'a su', 'avons su', 'avez su', 'ont su'] },
+              'FUTUR SIMPLE': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['saurai', 'sauras', 'saura', 'saurons', 'saurez', 'sauront'] },
+              'CONDITIONNEL': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['saurais', 'saurais', 'saurait', 'saurions', 'sauriez', 'sauraient'] },
+              'SUBJONCTIF': { pronouns: ['que je', 'que tu', "qu'il/elle/on", 'que nous', 'que vous', "qu'ils/elles"], verbs: ['sache', 'saches', 'sache', 'sachions', 'sachiez', 'sachent'] },
+              'PARTICIPE PRÉSENT': { verbs: ['sachant'] },
+              'PARTICIPE PASSÉ': { verbs: ['su'] }
+            },
+            'Partir': {
+              'PRÉSENT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['pars', 'pars', 'part', 'partons', 'partez', 'partent'] },
+              'IMPARFAIT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['partais', 'partais', 'partait', 'partions', 'partiez', 'partaient'] },
+              'PASSÉ COMPOSÉ': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['suis parti(e)', 'es parti(e)', 'est parti(e)', 'sommes parti(e)s', 'êtes parti(e)s', 'sont parti(e)s'] },
+              'FUTUR SIMPLE': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['partirai', 'partiras', 'partira', 'partirons', 'partirez', 'partiront'] },
+              'CONDITIONNEL': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['partirais', 'partirais', 'partirait', 'partirions', 'partiriez', 'partiraient'] },
+              'SUBJONCTIF': { pronouns: ['que je', 'que tu', "qu'il/elle/on", 'que nous', 'que vous', "qu'ils/elles"], verbs: ['parte', 'partes', 'parte', 'partions', 'partiez', 'partent'] },
+              'PARTICIPE PRÉSENT': { verbs: ['partant'] },
+              'PARTICIPE PASSÉ': { verbs: ['parti'] }
+            },
+            'Aller': {
+              'PRÉSENT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['vais', 'vas', 'va', 'allons', 'allez', 'vont'] },
+              'IMPARFAIT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['allais', 'allais', 'allait', 'allions', 'alliez', 'allaient'] },
+              'PASSÉ COMPOSÉ': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['suis allé(e)', 'es allé(e)', 'est allé(e)', 'sommes allé(e)s', 'êtes allé(e)s', 'sont allé(e)s'] },
+              'FUTUR SIMPLE': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['irai', 'iras', 'ira', 'irons', 'irez', 'iront'] },
+              'CONDITIONNEL': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['irais', 'irais', 'irait', 'irions', 'iriez', 'iraient'] },
+              'SUBJONCTIF': { pronouns: ['que je', 'que tu', "qu'il/elle/on", 'que nous', 'que vous', "qu'ils/elles"], verbs: ['aille', 'ailles', 'aille', 'allions', 'alliez', 'aillent'] },
+              'PARTICIPE PRÉSENT': { verbs: ['allant'] },
+              'PARTICIPE PASSÉ': { verbs: ['allé'] }
+            },
+            'Faire': {
+              'PRÉSENT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['fais', 'fais', 'fait', 'faisons', 'faites', 'font'] },
+              'IMPARFAIT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['faisais', 'faisais', 'faisait', 'faisions', 'faisiez', 'faisaient'] },
+              'PASSÉ COMPOSÉ': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['ai fait', 'as fait', 'a fait', 'avons fait', 'avez fait', 'ont fait'] },
+              'FUTUR SIMPLE': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['ferai', 'feras', 'fera', 'ferons', 'ferez', 'feront'] },
+              'CONDITIONNEL': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['ferais', 'ferais', 'ferait', 'ferions', 'feriez', 'feraient'] },
+              'SUBJONCTIF': { pronouns: ['que je', 'que tu', "qu'il/elle/on", 'que nous', 'que vous', "qu'ils/elles"], verbs: ['fasse', 'fasses', 'fasse', 'fassions', 'fassiez', 'fassent'] },
+              'PARTICIPE PRÉSENT': { verbs: ['faisant'] },
+              'PARTICIPE PASSÉ': { verbs: ['fait'] }
+            },
+            'Voir': {
+              'PRÉSENT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['vois', 'vois', 'voit', 'voyons', 'voyez', 'voient'] },
+              'IMPARFAIT': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['voyais', 'voyais', 'voyait', 'voyions', 'voyiez', 'voyaient'] },
+              'PASSÉ COMPOSÉ': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['ai vu', 'as vu', 'a vu', 'avons vu', 'avez vu', 'ont vu'] },
+              'FUTUR SIMPLE': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['verrai', 'verras', 'verra', 'verrons', 'verrez', 'verront'] },
+              'CONDITIONNEL': { pronouns: ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['verrais', 'verrais', 'verrait', 'verrions', 'verriez', 'verraient'] },
+              'SUBJONCTIF': { pronouns: ['que je', 'que tu', "qu'il/elle/on", 'que nous', 'que vous', "qu'ils/elles"], verbs: ['voie', 'voies', 'voie', 'voyions', 'voyiez', 'voient'] },
+              'PARTICIPE PRÉSENT': { verbs: ['voyant'] },
+              'PARTICIPE PASSÉ': { verbs: ['vu'] }
+            }
+          };
+
+          const [selectedVerbs, setSelectedVerbs] = useState(['Prendre']);
+          const [selectedTenses, setSelectedTenses] = useState(['PRÉSENT']);
+          const [cards, setCards] = useState([]);
+          const [selectedCards, setSelectedCards] = useState([]);
+          const [matchedPairs, setMatchedPairs] = useState([]);
+          const [score, setScore] = useState(0);
+          const [showPrintMode, setShowPrintMode] = useState(false);
+          const [showQuizMode, setShowQuizMode] = useState(false);
+          const [showContextQuizMode, setShowContextQuizMode] = useState(false);
+          const [quizQuestions, setQuizQuestions] = useState([]);
+          const [contextQuizQuestions, setContextQuizQuestions] = useState([]);
+          const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+          const [selectedAnswer, setSelectedAnswer] = useState(null);
+          const [showResult, setShowResult] = useState(false);
+          const [quizScore, setQuizScore] = useState(0);
+
+          const initializeGame = () => {
+            const newCards = [];
+            
+            selectedVerbs.forEach(verb => {
+              const verbData = allVerbData[verb];
+              
+              selectedTenses.forEach(tense => {
+                const data = verbData[tense];
+                
+                if (data.pronouns) {
+                  data.pronouns.forEach((pronoun, idx) => {
+                    newCards.push({
+                      id: `${verb}-${tense}-pronoun-${idx}`,
+                      content: pronoun,
+                      type: 'pronoun',
+                      pairId: `${verb}-${tense}-${idx}`,
+                      tense: tense,
+                      verb: verb
+                    });
+                    newCards.push({
+                      id: `${verb}-${tense}-verb-${idx}`,
+                      content: data.verbs[idx],
+                      type: 'verb',
+                      pairId: `${verb}-${tense}-${idx}`,
+                      tense: tense,
+                      verb: verb
+                    });
+                  });
+                } else {
+                  newCards.push({
+                    id: `${verb}-${tense}-label-0`,
+                    content: tense,
+                    type: 'pronoun',
+                    pairId: `${verb}-${tense}-0`,
+                    tense: tense,
+                    verb: verb
+                  });
+                  newCards.push({
+                    id: `${verb}-${tense}-verb-0`,
+                    content: data.verbs[0],
+                    type: 'verb',
+                    pairId: `${verb}-${tense}-0`,
+                    tense: tense,
+                    verb: verb
+                  });
+                }
+              });
+            });
+            
+            for (let i = newCards.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [newCards[i], newCards[j]] = [newCards[j], newCards[i]];
+            }
+            
+            setCards(newCards);
+            setSelectedCards([]);
+            setMatchedPairs([]);
+            setScore(0);
+          };
+
+          const generateQuiz = () => {
+            const questions = [];
+            const allVerbsList = Object.keys(allVerbData);
+            
+            selectedVerbs.forEach(verb => {
+              const verbData = allVerbData[verb];
+              
+              selectedTenses.forEach(tense => {
+                const data = verbData[tense];
+                
+                if (data.pronouns) {
+                  data.pronouns.forEach((pronoun, idx) => {
+                    const correctAnswer = data.verbs[idx];
+                    const wrongAnswers = [];
+                    
+                    // Get wrong answers from same tense, different pronouns
+                    data.verbs.forEach((verb, vIdx) => {
+                      if (vIdx !== idx && verb !== correctAnswer && !wrongAnswers.includes(verb)) {
+                        wrongAnswers.push(verb);
+                      }
+                    });
+                    
+                    // Get wrong answers from other tenses of same verb
+                    Object.keys(verbData).forEach(otherTense => {
+                      if (otherTense !== tense && verbData[otherTense].pronouns) {
+                        const otherVerbs = verbData[otherTense].verbs;
+                        otherVerbs.forEach(verb => {
+                          if (verb !== correctAnswer && !wrongAnswers.includes(verb) && wrongAnswers.length < 6) {
+                            wrongAnswers.push(verb);
+                          }
+                        });
+                      }
+                    });
+                    
+                    // Shuffle and pick 3 wrong answers
+                    const shuffledWrong = wrongAnswers.sort(() => Math.random() - 0.5).slice(0, 3);
+                    const choices = [...shuffledWrong, correctAnswer].sort(() => Math.random() - 0.5);
+                    
+                    questions.push({
+                      pronoun: pronoun,
+                      tense: tense,
+                      correctAnswer: correctAnswer,
+                      choices: choices,
+                      verb: verb
+                    });
+                  });
+                } else {
+                  // For participes
+                  const correctAnswer = data.verbs[0];
+                  const wrongAnswers = [];
+                  
+                  // Get wrong answers from other tenses
+                  Object.keys(verbData).forEach(otherTense => {
+                    if (otherTense !== tense) {
+                      const otherData = verbData[otherTense];
+                      if (!otherData.pronouns) {
+                        wrongAnswers.push(otherData.verbs[0]);
+                      } else {
+                        otherData.verbs.forEach(verb => {
+                          if (!wrongAnswers.includes(verb) && wrongAnswers.length < 6) {
+                            wrongAnswers.push(verb);
+                          }
+                        });
+                      }
+                    }
+                  });
+                  
+                  const shuffledWrong = wrongAnswers.sort(() => Math.random() - 0.5).slice(0, 3);
+                  const choices = [...shuffledWrong, correctAnswer].sort(() => Math.random() - 0.5);
+                  
+                  questions.push({
+                    pronoun: null,
+                    tense: tense,
+                    correctAnswer: correctAnswer,
+                    choices: choices,
+                    verb: verb
+                  });
+                }
+              });
+            });
+            
+            // Shuffle questions
+            const shuffledQuestions = questions.sort(() => Math.random() - 0.5);
+            setQuizQuestions(shuffledQuestions);
+            setCurrentQuestionIndex(0);
+            setQuizScore(0);
+            setSelectedAnswer(null);
+            setShowResult(false);
+            setShowQuizMode(true);
+          };
+
+          const handleAnswerSelect = (answer) => {
+            if (showResult) return;
+            setSelectedAnswer(answer);
+          };
+
+          const handleSubmitAnswer = () => {
+            if (selectedAnswer === null) return;
+            
+            setShowResult(true);
+            const currentQuestions = showQuizMode ? quizQuestions : contextQuizQuestions;
+            if (selectedAnswer === currentQuestions[currentQuestionIndex].correctAnswer) {
+              setQuizScore(quizScore + 1);
+            }
+          };
+
+          const handleNextQuestion = () => {
+            const currentQuestions = showQuizMode ? quizQuestions : contextQuizQuestions;
+            if (currentQuestionIndex < currentQuestions.length - 1) {
+              setCurrentQuestionIndex(currentQuestionIndex + 1);
+              setSelectedAnswer(null);
+              setShowResult(false);
+            }
+          };
+
+          const handleRestartQuiz = () => {
+            generateQuiz();
+          };
+
+          const sentenceTemplates = {
+            'Aimer': [
+              { template: 'Je ___ jouer au basketball avec mes amis.', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ vraiment le hockey sur glace?', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Mon frère ___ regarder les matchs de football.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Hier, nous ___ faire du skateboard au parc.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'Quand j\'étais petit, je ___ grimper aux arbres.', pronoun: 'je', tense: 'IMPARFAIT' }
+            ],
+            'Faire': [
+              { template: 'Je ___ mes devoirs après l\'entraînement.', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ du vélo ce weekend?', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Il ___ de la natation tous les mercredis.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Nous ___ une partie de soccer hier.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'L\'année prochaine, je ___ du karaté.', pronoun: 'je', tense: 'FUTUR SIMPLE' }
+            ],
+            'Aller': [
+              { template: 'Je ___ au terrain de basketball.', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ à l\'entraînement de hockey?', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Mon ami ___ marquer un but!', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Samedi, nous ___ au match de football.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'Demain, ils ___ jouer au parc.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' }
+            ],
+            'Pouvoir': [
+              { template: 'Je ___ courir très vite!', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ sauter plus haut que moi?', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Il ___ battre le record de l\'école.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Hier, nous ___ gagner le match!', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'Si je m\'entraîne, je ___ devenir champion.', pronoun: 'je', tense: 'CONDITIONNEL' }
+            ],
+            'Vouloir': [
+              { template: 'Je ___ devenir joueur professionnel.', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ jouer dans mon équipe?', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Il ___ gagner la médaille d\'or.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Nous ___ essayer ce nouveau jeu vidéo.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'Je ___ bien participer au tournoi!', pronoun: 'je', tense: 'CONDITIONNEL' }
+            ],
+            'Avoir': [
+              { template: 'Je ___ un nouveau ballon de soccer.', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ un skateboard génial!', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Mon équipe ___ gagné le championnat.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'Hier, nous ___ une super partie.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'L\'année dernière, je ___ les meilleures chaussures de course.', pronoun: 'je', tense: 'IMPARFAIT' }
+            ],
+            'Être': [
+              { template: 'Je ___ capitaine de l\'équipe.', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ vraiment rapide à vélo!', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Il ___ le meilleur gardien de but.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Hier, nous ___ les champions du tournoi!', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'Avant, je ___ dans l\'équipe junior.', pronoun: 'je', tense: 'IMPARFAIT' }
+            ],
+            'Jouer': [
+              { template: 'Je ___ aux jeux vidéo après l\'école.', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ au basketball ce soir?', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Il ___ de la guitare dans un groupe.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Hier, nous ___ au hockey toute la journée.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'Demain, vous ___ contre l\'autre école.', pronoun: 'vous', tense: 'FUTUR SIMPLE' }
+            ],
+            'Prendre': [
+              { template: 'Je ___ mon vélo pour aller à l\'école.', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ le bus ou tu marches?', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Mon ami ___ toujours son lunch.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Nous ___ nos vélos pour aller au parc.', pronoun: 'nous', tense: 'PRÉSENT' },
+              { template: 'Vous ___ vos skateboards?', pronoun: 'vous', tense: 'PRÉSENT' },
+              { template: 'Mes copains ___ toujours leurs ballons.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
+              { template: 'Je ___ mon équipement de hockey.', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ ton casque pour faire du vélo?', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Il ___ son sac de sport.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Hier, nous ___ nos planches à roulettes.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'Demain, je ___ mes nouvelles chaussures de sport.', pronoun: 'je', tense: 'FUTUR SIMPLE' }
+            ],
+            'Voir': [
+              { template: 'Je ___ le match à la télé ce soir.', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ cette nouvelle console de jeu?', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Il ___ tous les films de super-héros.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Hier, nous ___ un film d\'action génial.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'Je ___ mes amis au parc tout à l\'heure.', pronoun: 'je', tense: 'FUTUR SIMPLE' }
+            ],
+            'Savoir': [
+              { template: 'Je ___ faire du skateboard maintenant!', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ nager sous l\'eau?', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Mon frère ___ jouer de la batterie.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Maintenant, nous ___ faire des tricks cool.', pronoun: 'nous', tense: 'PRÉSENT' },
+              { template: 'Avant, je ne ___ pas comment dribbler.', pronoun: 'je', tense: 'IMPARFAIT' }
+            ],
+            'Partir': [
+              { template: 'Je ___ en vacances à la mer cet été.', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ en camping ce weekend?', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'L\'équipe ___ en tournoi samedi.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Hier, nous ___ faire du vélo de montagne.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'Demain, je ___ tôt pour le match.', pronoun: 'je', tense: 'FUTUR SIMPLE' }
+            ],
+            'Commencer': [
+              { template: 'Je ___ l\'entraînement à 16h.', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ quand ton cours de karaté?', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Le match ___ dans cinq minutes!', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Hier, nous ___ une nouvelle partie.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'L\'année prochaine, je ___ le tennis.', pronoun: 'je', tense: 'FUTUR SIMPLE' }
+            ],
+            'Finir': [
+              { template: 'Je ___ toujours mes devoirs avant de jouer.', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ ton entraînement à quelle heure?', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Le tournoi ___ dimanche soir.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Hier, nous ___ la course en première place!', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'Je ___ ce niveau du jeu bientôt.', pronoun: 'je', tense: 'FUTUR SIMPLE' }
+            ],
+            'Manger': [
+              { template: 'Je ___ toujours avant le match.', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ une pizza après l\'entraînement?', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Mon équipe ___ ensemble après les matchs.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Hier, nous ___ des hamburgers après le tournoi.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'Demain, je ___ chez mon copain.', pronoun: 'je', tense: 'FUTUR SIMPLE' }
+            ],
+            'Devoir': [
+              { template: 'Je ___ m\'entraîner tous les jours.', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ porter ton casque pour faire du vélo.', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Il ___ arriver à l\'heure pour le match.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Hier, nous ___ courir 5 kilomètres.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'Je ___ m\'améliorer pour le prochain tournoi.', pronoun: 'je', tense: 'CONDITIONNEL' }
+            ],
+            'Finir': [
+              { template: 'Je ___ toujours mes devoirs avant de jouer.', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ ton entraînement à quelle heure?', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Le tournoi ___ dimanche soir.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Hier, nous ___ la course en première place!', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'Je ___ ce niveau du jeu bientôt.', pronoun: 'je', tense: 'FUTUR SIMPLE' }
+            ],
+            'Manger': [
+              { template: 'Je ___ toujours avant le match.', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ une pizza après l\'entraînement?', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Mon équipe ___ ensemble après les matchs.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Hier, nous ___ des hamburgers après le tournoi.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'Demain, je ___ chez mon copain.', pronoun: 'je', tense: 'FUTUR SIMPLE' }
+            ],
+            'Devoir': [
+              { template: 'Je ___ m\'entraîner tous les jours.', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ porter ton casque pour faire du vélo.', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Il ___ arriver à l\'heure pour le match.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Hier, nous ___ courir 5 kilomètres.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'Je ___ m\'améliorer pour le prochain tournoi.', pronoun: 'je', tense: 'CONDITIONNEL' }
+            ],
+            'Dire': [
+              { template: 'Je ___ toujours la vérité à mon coach.', pronoun: 'je', tense: 'PRÉSENT' },
+              { template: 'Tu ___ quoi à ton équipe?', pronoun: 'tu', tense: 'PRÉSENT' },
+              { template: 'Le capitaine ___ de bien jouer en équipe.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+              { template: 'Hier, nous ___ bravo aux gagnants.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+              { template: 'Je ___ que c\'était un super match!', pronoun: 'je', tense: 'IMPARFAIT' }
+            ]
+          };
+
+          const generateContextQuiz = () => {
+            const questions = [];
+            
+            selectedVerbs.forEach(selectedVerb => {
+              const verbData = allVerbData[selectedVerb];
+              
+              // Get templates for this verb
+              const templates = sentenceTemplates[selectedVerb] || [];
+              
+              if (templates.length === 0) {
+                return; // Skip verbs without templates
+              }
+              
+              // Filter templates by selected tenses and create questions
+              templates.forEach(template => {
+                if (selectedTenses.includes(template.tense)) {
+                  const tenseData = verbData[template.tense];
+                  
+                  if (tenseData && tenseData.pronouns) {
+                    const pronounIndex = tenseData.pronouns.indexOf(template.pronoun);
+                    if (pronounIndex !== -1) {
+                      let correctAnswer = tenseData.verbs[pronounIndex];
+                      
+                      // Handle gender-specific forms for PASSÉ COMPOSÉ with être verbs
+                      if (template.gender && template.tense === 'PASSÉ COMPOSÉ' && (selectedVerb === 'Aller' || selectedVerb === 'Partir')) {
+                        if (template.gender === 'masculine') {
+                          correctAnswer = correctAnswer.replace('(e)', '').replace('(e)s', 's');
+                        } else if (template.gender === 'feminine') {
+                          correctAnswer = correctAnswer.replace('(e)', 'e').replace('(e)s', 'es');
+                        }
+                      }
+                      
+                      const wrongAnswers = [];
+                      
+                      // For gender-specific questions, add both masculine and feminine forms as choices
+                      if (template.gender && template.tense === 'PASSÉ COMPOSÉ' && (selectedVerb === 'Aller' || selectedVerb === 'Partir')) {
+                        const baseForm = tenseData.verbs[pronounIndex];
+                        const mascForm = baseForm.replace('(e)', '').replace('(e)s', 's');
+                        const femForm = baseForm.replace('(e)', 'e').replace('(e)s', 'es');
+                        
+                        // Add the opposite gender as wrong answer
+                        if (template.gender === 'masculine') {
+                          wrongAnswers.push(femForm);
+                        } else {
+                          wrongAnswers.push(mascForm);
+                        }
+                        
+                        // Add forms from other pronouns
+                        tenseData.verbs.forEach((verb, idx) => {
+                          if (idx !== pronounIndex && wrongAnswers.length < 4) {
+                            const masc = verb.replace('(e)', '').replace('(e)s', 's');
+                            const fem = verb.replace('(e)', 'e').replace('(e)s', 'es');
+                            if (!wrongAnswers.includes(masc) && masc !== correctAnswer) {
+                              wrongAnswers.push(masc);
+                            }
+                            if (!wrongAnswers.includes(fem) && fem !== correctAnswer && wrongAnswers.length < 4) {
+                              wrongAnswers.push(fem);
+                            }
+                          }
+                        });
+                      } else {
+                        // Regular wrong answer generation
+                        tenseData.verbs.forEach((verb, idx) => {
+                          if (idx !== pronounIndex && verb !== correctAnswer && !wrongAnswers.includes(verb)) {
+                            wrongAnswers.push(verb);
+                          }
+                        });
+                      }
+                      
+                      // Get wrong answers from other tenses
+                      Object.keys(verbData).forEach(otherTense => {
+                        if (verbData[otherTense].pronouns && wrongAnswers.length < 8) {
+                          const otherData = verbData[otherTense];
+                          otherData.verbs.forEach(verb => {
+                            if (verb !== correctAnswer && !wrongAnswers.includes(verb)) {
+                              wrongAnswers.push(verb);
+                            }
+                          });
+                        }
+                      });
+                      
+                      // Pick 3 wrong answers and shuffle
+                      const shuffledWrong = wrongAnswers.sort(() => Math.random() - 0.5).slice(0, 3);
+                      const choices = [...shuffledWrong, correctAnswer].sort(() => Math.random() - 0.5);
+                      
+                      questions.push({
+                        sentence: template.template,
+                        pronoun: template.pronoun,
+                        tense: template.tense,
+                        correctAnswer: correctAnswer,
+                        choices: choices,
+                        verb: selectedVerb,
+                        gender: template.gender || null
+                      });
+                    }
+                  }
+                }
+              });
+            });
+            
+            if (questions.length === 0) {
+              alert('Aucune question générée. Vérifiez que les verbes sélectionnés ont des phrases contextuelles disponibles pour les temps choisis.');
+              return;
+            }
+            
+            // Shuffle all questions
+            const shuffledQuestions = questions.sort(() => Math.random() - 0.5);
+            setContextQuizQuestions(shuffledQuestions);
+            setCurrentQuestionIndex(0);
+            setQuizScore(0);
+            setSelectedAnswer(null);
+            setShowResult(false);
+            setShowContextQuizMode(true);
+          };
+
+          const handleRestartContextQuiz = () => {
+            generateContextQuiz();
+          };
+
+          useEffect(() => {
+            initializeGame();
+          }, [selectedVerbs, selectedTenses]);
+
+          const toggleVerb = (verb) => {
+            if (selectedVerbs.includes(verb)) {
+              if (selectedVerbs.length > 1) {
+                setSelectedVerbs(selectedVerbs.filter(v => v !== verb));
+              }
+            } else {
+              setSelectedVerbs([...selectedVerbs, verb]);
+            }
+          };
+
+          const handleCardClick = (card) => {
+            if (matchedPairs.includes(card.pairId) || selectedCards.find(c => c.id === card.id)) {
+              return;
+            }
+
+            const newSelected = [...selectedCards, card];
+            setSelectedCards(newSelected);
+
+            if (newSelected.length === 2) {
+              if (newSelected[0].pairId === newSelected[1].pairId && 
+                  newSelected[0].type !== newSelected[1].type) {
+                setTimeout(() => {
+                  setMatchedPairs([...matchedPairs, card.pairId]);
+                  setSelectedCards([]);
+                  setScore(score + 1);
+                }, 500);
+              } else {
+                setTimeout(() => {
+                  setSelectedCards([]);
+                }, 1000);
+              }
+            }
+          };
+
+          const toggleTense = (tense) => {
+            if (selectedTenses.includes(tense)) {
+              if (selectedTenses.length > 1) {
+                setSelectedTenses(selectedTenses.filter(t => t !== tense));
+              }
+            } else {
+              setSelectedTenses([...selectedTenses, tense]);
+            }
+          };
+
+          const isCardSelected = (card) => selectedCards.find(c => c.id === card.id);
+          const isCardMatched = (card) => matchedPairs.includes(card.pairId);
+
+          if (showContextQuizMode) {
+            if (contextQuizQuestions.length === 0) {
+              return <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8 flex items-center justify-center">
+                <div className="text-xl">Chargement du quiz...</div>
+              </div>;
+            }
+
+            const currentQuestion = contextQuizQuestions[currentQuestionIndex];
+            const isQuizComplete = currentQuestionIndex === contextQuizQuestions.length - 1 && showResult;
+
+            return (
+              <div className="min-h-screen bg-gradient-to-br from-green-50 to-teal-100 p-8">
+                <div className="max-w-3xl mx-auto">
+                  <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+                    <div className="flex justify-between items-center mb-4">
+                      <h1 className="text-2xl font-bold text-teal-900">Quiz Contexte 🏀⚽🎮</h1>
+                      <button
+                        onClick={() => setShowContextQuizMode(false)}
+                        className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+                      >
+                        ← Retour au Jeu
+                      </button>
+                    </div>
+
+                    <div className="mb-4">
+                      <div className="flex justify-between text-sm text-gray-600 mb-2">
+                        <span>Question {currentQuestionIndex + 1} / {contextQuizQuestions.length}</span>
+                        <span>Score: {quizScore} / {contextQuizQuestions.length}</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                          className="bg-teal-600 h-2 rounded-full transition-all"
+                          style={{ width: `${((currentQuestionIndex + 1) / contextQuizQuestions.length) * 100}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="bg-teal-50 rounded-lg p-6 mb-6">
+                      <div className="text-sm text-teal-600 font-semibold mb-3">
+                        {currentQuestion.verb} - {currentQuestion.tense}
+                      </div>
+                      <div className="text-xl font-bold text-gray-800 mb-4">
+                        Complète la phrase:
+                      </div>
+                      <div className="text-lg text-gray-700 leading-relaxed">
+                        {currentQuestion.sentence.split('___')[0]}
+                        <select
+                          value={selectedAnswer || ''}
+                          onChange={(e) => setSelectedAnswer(e.target.value)}
+                          disabled={showResult}
+                          className={`mx-2 px-3 py-1 rounded-lg font-bold text-lg border-2 ${
+                            showResult
+                              ? selectedAnswer === currentQuestion.correctAnswer
+                                ? 'bg-green-100 border-green-500 text-green-800'
+                                : 'bg-red-100 border-red-500 text-red-800'
+                              : selectedAnswer
+                              ? 'bg-teal-50 border-teal-500 text-teal-900'
+                              : 'border-gray-300'
+                          }`}
+                        >
+                          <option value="">___</option>
+                          {currentQuestion.choices.map((choice, idx) => (
+                            <option key={idx} value={choice}>
+                              {choice}
+                            </option>
+                          ))}
+                        </select>
+                        {currentQuestion.sentence.split('___')[1]}
+                      </div>
+                      {showResult && (
+                        <div className={`mt-4 p-3 rounded-lg ${
+                          selectedAnswer === currentQuestion.correctAnswer
+                            ? 'bg-green-100 text-green-800'
+                            : 'bg-red-100 text-red-800'
+                        }`}>
+                          {selectedAnswer === currentQuestion.correctAnswer ? (
+                            <div className="flex items-center gap-2">
+                              <span className="text-2xl">✓</span>
+                              <span className="font-semibold">Bravo! C'est correct!</span>
+                            </div>
+                          ) : (
+                            <div>
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="text-2xl">✗</span>
+                                <span className="font-semibold">Pas tout à fait...</span>
+                              </div>
+                              <div className="text-sm">
+                                La bonne réponse est: <span className="font-bold">{currentQuestion.correctAnswer}</span>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    {!showResult ? (
+                      <button
+                        onClick={handleSubmitAnswer}
+                        disabled={selectedAnswer === null || selectedAnswer === ''}
+                        className={`w-full py-3 rounded-lg font-semibold ${
+                          selectedAnswer === null || selectedAnswer === ''
+                            ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                            : 'bg-teal-600 text-white hover:bg-teal-700'
+                        }`}
+                      >
+                        Valider
+                      </button>
+                    ) : isQuizComplete ? (
+                      <div className="text-center">
+                        <div className="bg-green-100 border-2 border-green-500 rounded-lg p-6 mb-4">
+                          <h2 className="text-2xl font-bold text-green-800 mb-2">
+                            🎉 Quiz Terminé! 🎉
+                          </h2>
+                          <p className="text-xl text-green-700">
+                            Score Final: {quizScore} / {contextQuizQuestions.length} ({Math.round((quizScore / contextQuizQuestions.length) * 100)}%)
+                          </p>
+                        </div>
+                        <div className="flex gap-3">
+                          <button
+                            onClick={handleRestartContextQuiz}
+                            className="flex-1 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 font-semibold"
+                          >
+                            Recommencer le Quiz
+                          </button>
+                          <button
+                            onClick={() => setShowContextQuizMode(false)}
+                            className="flex-1 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 font-semibold"
+                          >
+                            Retour au Menu
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={handleNextQuestion}
+                        className="w-full py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 font-semibold"
+                      >
+                        Question Suivante →
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          }
+
+          if (showQuizMode) {
+            if (quizQuestions.length === 0) {
+              return <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8 flex items-center justify-center">
+                <div className="text-xl">Chargement du quiz...</div>
+              </div>;
+            }
+
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+            const isQuizComplete = currentQuestionIndex === quizQuestions.length - 1 && showResult;
+
+            return (
+              <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+                <div className="max-w-3xl mx-auto">
+                  <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+                    <div className="flex justify-between items-center mb-4">
+                      <h1 className="text-2xl font-bold text-indigo-900">Quiz Mode</h1>
+                      <button
+                        onClick={() => setShowQuizMode(false)}
+                        className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+                      >
+                        ← Retour au Jeu
+                      </button>
+                    </div>
+
+                    <div className="mb-4">
+                      <div className="flex justify-between text-sm text-gray-600 mb-2">
+                        <span>Question {currentQuestionIndex + 1} / {quizQuestions.length}</span>
+                        <span>Score: {quizScore} / {quizQuestions.length}</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                          className="bg-indigo-600 h-2 rounded-full transition-all"
+                          style={{ width: `${((currentQuestionIndex + 1) / quizQuestions.length) * 100}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="bg-indigo-50 rounded-lg p-6 mb-6">
+                      <div className="text-sm text-indigo-600 font-semibold mb-2">
+                        {currentQuestion.verb} - {currentQuestion.tense}
+                      </div>
+                      <div className="text-2xl font-bold text-gray-800">
+                        {currentQuestion.pronoun 
+                          ? `Conjuguez: ${currentQuestion.pronoun}` 
+                          : `Quelle est la forme: ${currentQuestion.tense}?`}
+                      </div>
+                    </div>
+
+                    <div className="space-y-3 mb-6">
+                      {currentQuestion.choices.map((choice, idx) => {
+                        const isSelected = selectedAnswer === choice;
+                        const isCorrect = choice === currentQuestion.correctAnswer;
+                        const showCorrectness = showResult && (isSelected || isCorrect);
+                        
+                        return (
+                          <button
+                            key={idx}
+                            onClick={() => handleAnswerSelect(choice)}
+                            disabled={showResult}
+                            className={`w-full p-4 rounded-lg text-left font-semibold transition-all ${
+                              showResult
+                                ? isCorrect
+                                  ? 'bg-green-100 border-2 border-green-500 text-green-800'
+                                  : isSelected
+                                  ? 'bg-red-100 border-2 border-red-500 text-red-800'
+                                  : 'bg-gray-100 border-2 border-gray-300 text-gray-500'
+                                : isSelected
+                                ? 'bg-indigo-100 border-2 border-indigo-500 text-indigo-900'
+                                : 'bg-white border-2 border-gray-300 hover:border-indigo-300 hover:bg-indigo-50'
+                            }`}
+                          >
+                            <div className="flex items-center justify-between">
+                              <span>{choice}</span>
+                              {showResult && isCorrect && <span className="text-green-600">✓</span>}
+                              {showResult && isSelected && !isCorrect && <span className="text-red-600">✗</span>}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {!showResult ? (
+                      <button
+                        onClick={handleSubmitAnswer}
+                        disabled={selectedAnswer === null}
+                        className={`w-full py-3 rounded-lg font-semibold ${
+                          selectedAnswer === null
+                            ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                            : 'bg-indigo-600 text-white hover:bg-indigo-700'
+                        }`}
+                      >
+                        Valider
+                      </button>
+                    ) : isQuizComplete ? (
+                      <div className="text-center">
+                        <div className="bg-green-100 border-2 border-green-500 rounded-lg p-6 mb-4">
+                          <h2 className="text-2xl font-bold text-green-800 mb-2">
+                            🎉 Quiz Terminé! 🎉
+                          </h2>
+                          <p className="text-xl text-green-700">
+                            Score Final: {quizScore} / {quizQuestions.length} ({Math.round((quizScore / quizQuestions.length) * 100)}%)
+                          </p>
+                        </div>
+                        <div className="flex gap-3">
+                          <button
+                            onClick={handleRestartQuiz}
+                            className="flex-1 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-semibold"
+                          >
+                            Recommencer le Quiz
+                          </button>
+                          <button
+                            onClick={() => setShowQuizMode(false)}
+                            className="flex-1 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 font-semibold"
+                          >
+                            Retour au Menu
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={handleNextQuestion}
+                        className="w-full py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-semibold"
+                      >
+                        Question Suivante →
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          }
+
+          if (showPrintMode) {
+            return (
+              <div className="min-h-screen bg-white p-8">
+                <div className="max-w-6xl mx-auto">
+                  <div className="mb-6">
+                    <button
+                      onClick={() => setShowPrintMode(false)}
+                      className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 mr-3"
+                    >
+                      ← Retour au Jeu
+                    </button>
+                    <button
+                      onClick={() => window.print()}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                    >
+                      🖨️ Imprimer
+                    </button>
+                  </div>
+                  
+                  {selectedVerbs.map(selectedVerb => (
+                    <div key={selectedVerb} className="mb-16">
+                      <h1 className="text-3xl font-bold text-center mb-8">{selectedVerb}</h1>
+                      
+                      {Object.entries(allVerbData[selectedVerb]).map(([tense, data]) => (
+                        <div key={tense} className="mb-12">
+                          <h2 className="text-2xl font-bold text-center mb-6">{tense}</h2>
+                          <div className="grid grid-cols-2 gap-4">
+                            {data.pronouns ? (
+                              data.pronouns.map((pronoun, idx) => (
+                                <React.Fragment key={idx}>
+                                  <div className="border-2 border-dashed border-blue-500 bg-blue-50 p-4 text-center min-h-20 flex flex-col justify-center">
+                                    <div className="text-lg font-bold">{pronoun}</div>
+                                    <div className="text-xs text-gray-600 mt-1">pronom</div>
+                                  </div>
+                                  <div className="border-2 border-dashed border-orange-500 bg-orange-50 p-4 text-center min-h-20 flex flex-col justify-center">
+                                    <div className="text-lg font-bold">{data.verbs[idx]}</div>
+                                    <div className="text-xs text-gray-600 mt-1">verbe</div>
+                                  </div>
+                                </React.Fragment>
+                              ))
+                            ) : (
+                              <React.Fragment>
+                                <div className="border-2 border-dashed border-blue-500 bg-blue-50 p-4 text-center min-h-20 flex flex-col justify-center">
+                                  <div className="text-lg font-bold">{tense}</div>
+                                  <div className="text-xs text-gray-600 mt-1">forme</div>
+                                </div>
+                                <div className="border-2 border-dashed border-orange-500 bg-orange-50 p-4 text-center min-h-20 flex flex-col justify-center">
+                                  <div className="text-lg font-bold">{data.verbs[0]}</div>
+                                  <div className="text-xs text-gray-600 mt-1">verbe</div>
+                                </div>
+                              </React.Fragment>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          }
+
+          const totalPairs = selectedTenses.reduce((sum, tense) => {
+            return sum + selectedVerbs.reduce((verbSum, verb) => {
+              const data = allVerbData[verb][tense];
+              return verbSum + (data.pronouns ? data.pronouns.length : 1);
+            }, 0);
+          }, 0);
+          const gameWon = matchedPairs.length === totalPairs;
+
+          return (
+            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+              <div className="max-w-6xl mx-auto">
+                <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+                  <h1 className="text-3xl font-bold text-center text-indigo-900 mb-4">
+                    Jeu de Conjugaison Française
+                  </h1>
+                  
+                  <div className="mb-4">
+                    <h3 className="text-sm font-semibold text-gray-700 mb-2">Choisir les Verbes:</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {Object.keys(allVerbData).map(verb => (
+                        <button
+                          key={verb}
+                          onClick={() => toggleVerb(verb)}
+                          className={`px-3 py-2 rounded-lg font-semibold transition-colors ${
+                            selectedVerbs.includes(verb)
+                              ? 'bg-purple-600 text-white'
+                              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                          }`}
+                        >
+                          {verb}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="mb-4">
+                    <h3 className="text-sm font-semibold text-gray-700 mb-2">Choisir les Temps:</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedVerbs.length > 0 && Object.keys(allVerbData[selectedVerbs[0]]).map(tense => (
+                        <button
+                          key={tense}
+                          onClick={() => toggleTense(tense)}
+                          className={`px-3 py-2 rounded-lg font-semibold transition-colors ${
+                            selectedTenses.includes(tense)
+                              ? 'bg-indigo-600 text-white'
+                              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                          }`}
+                        >
+                          {tense}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-center gap-4 flex-wrap">
+                    <div className="flex items-center gap-2">
+                      <Award size={24} />
+                      <span className="text-lg font-semibold">
+                        Score: {score} / {totalPairs}
+                      </span>
+                    </div>
+                    
+                    <button
+                      onClick={initializeGame}
+                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-2"
+                    >
+                      <Shuffle size={20} />
+                      Mélanger
+                    </button>
+                    
+                    <button
+                      onClick={() => setShowPrintMode(true)}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                    >
+                      📄 Mode Impression
+                    </button>
+                    
+                    <button
+                      onClick={generateQuiz}
+                      className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+                    >
+                      🎯 Mode Quiz
+                    </button>
+                    
+                    <button
+                      onClick={generateContextQuiz}
+                      className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700"
+                    >
+                      🏀 Quiz Contexte
+                    </button>
+                  </div>
+                </div>
+
+                {gameWon && (
+                  <div className="bg-green-100 border-2 border-green-500 rounded-lg p-6 mb-6 text-center">
+                    <h2 className="text-2xl font-bold text-green-800 mb-2">
+                      🎉 Félicitations! 🎉
+                    </h2>
+                    <p className="text-green-700">Vous avez trouvé toutes les paires!</p>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
+                  {cards.map(card => {
+                    const selected = isCardSelected(card);
+                    const matched = isCardMatched(card);
+                    
+                    return (
+                      <button
+                        key={card.id}
+                        onClick={() => handleCardClick(card)}
+                        disabled={matched}
+                        className={`
+                          aspect-square p-3 rounded-lg font-bold text-sm transition-all transform
+                          ${card.type === 'pronoun' 
+                            ? 'bg-blue-100 border-2 border-blue-400' 
+                            : 'bg-orange-100 border-2 border-orange-400'
+                          }
+                          ${selected ? 'scale-105 ring-4 ring-yellow-400' : ''}
+                          ${matched ? 'opacity-40 cursor-not-allowed' : 'hover:scale-105 cursor-pointer'}
+                          ${!matched && !selected ? 'hover:shadow-lg' : ''}
+                        `}
+                      >
+                        <div className="flex flex-col items-center justify-center h-full">
+                          <div className="text-center break-words">{card.content}</div>
+                          {selectedTenses.length > 1 && (
+                            <div className="text-xs mt-1 opacity-60">{card.tense.split(' ')[0]}</div>
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {cards.length === 0 && (
+                  <div className="text-center text-gray-500 mt-8">
+                    Sélectionnez au moins un temps verbal pour commencer!
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<VerbMatchingGame />);
+    </script>
+</body>
+</html>
