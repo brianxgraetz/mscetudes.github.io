@@ -387,111 +387,847 @@
             generateQuiz();
           };
 
+
+          {
+
           const sentenceTemplates = {
-            'Aimer': [
-              { template: 'Je ___ jouer au basketball avec mes amis.', pronoun: 'je', tense: 'PRÉSENT' },
-              { template: 'Tu ___ vraiment le hockey sur glace?', pronoun: 'tu', tense: 'PRÉSENT' },
-              { template: 'Mon frère ___ regarder les matchs de football.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
-              { template: 'Hier, nous ___ faire du skateboard au parc.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
-              { template: 'Quand j\'étais petit, je ___ grimper aux arbres.', pronoun: 'je', tense: 'IMPARFAIT' }
-            ],
-            'Faire': [
-              { template: 'Je ___ mes devoirs après l\'entraînement.', pronoun: 'je', tense: 'PRÉSENT' },
-              { template: 'Tu ___ du vélo ce weekend?', pronoun: 'tu', tense: 'PRÉSENT' },
-              { template: 'Il ___ de la natation tous les mercredis.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
-              { template: 'Nous ___ une partie de soccer hier.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
-              { template: 'L\'année prochaine, je ___ du karaté.', pronoun: 'je', tense: 'FUTUR SIMPLE' }
-            ],
-            'Aller': [
-              { template: 'Je ___ au terrain de basketball.', pronoun: 'je', tense: 'PRÉSENT' },
-              { template: 'Tu ___ à l\'entraînement de hockey?', pronoun: 'tu', tense: 'PRÉSENT' },
-              { template: 'Mon ami ___ marquer un but!', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
-              { template: 'Samedi, nous ___ au match de football.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
-              { template: 'Demain, ils ___ jouer au parc.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' }
-            ],
-            'Pouvoir': [
-              { template: 'Je ___ courir très vite!', pronoun: 'je', tense: 'PRÉSENT' },
-              { template: 'Tu ___ sauter plus haut que moi?', pronoun: 'tu', tense: 'PRÉSENT' },
-              { template: 'Il ___ battre le record de l\'école.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
-              { template: 'Hier, nous ___ gagner le match!', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
-              { template: 'Si je m\'entraîne, je ___ devenir champion.', pronoun: 'je', tense: 'CONDITIONNEL' }
-            ],
-            'Vouloir': [
-              { template: 'Je ___ devenir joueur professionnel.', pronoun: 'je', tense: 'PRÉSENT' },
-              { template: 'Tu ___ jouer dans mon équipe?', pronoun: 'tu', tense: 'PRÉSENT' },
-              { template: 'Il ___ gagner la médaille d\'or.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
-              { template: 'Nous ___ essayer ce nouveau jeu vidéo.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
-              { template: 'Je ___ bien participer au tournoi!', pronoun: 'je', tense: 'CONDITIONNEL' }
-            ],
-            'Avoir': [
-              { template: 'Je ___ un nouveau ballon de soccer.', pronoun: 'je', tense: 'PRÉSENT' },
-              { template: 'Tu ___ un skateboard génial!', pronoun: 'tu', tense: 'PRÉSENT' },
-              { template: 'Mon équipe ___ gagné le championnat.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ' },
-              { template: 'Hier, nous ___ une super partie.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
-              { template: 'L\'année dernière, je ___ les meilleures chaussures de course.', pronoun: 'je', tense: 'IMPARFAIT' }
-            ],
-            'Être': [
-              { template: 'Je ___ capitaine de l\'équipe.', pronoun: 'je', tense: 'PRÉSENT' },
-              { template: 'Tu ___ vraiment rapide à vélo!', pronoun: 'tu', tense: 'PRÉSENT' },
-              { template: 'Il ___ le meilleur gardien de but.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
-              { template: 'Hier, nous ___ les champions du tournoi!', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
-              { template: 'Avant, je ___ dans l\'équipe junior.', pronoun: 'je', tense: 'IMPARFAIT' }
-            ],
-            'Jouer': [
-              { template: 'Je ___ aux jeux vidéo après l\'école.', pronoun: 'je', tense: 'PRÉSENT' },
-              { template: 'Tu ___ au basketball ce soir?', pronoun: 'tu', tense: 'PRÉSENT' },
-              { template: 'Il ___ de la guitare dans un groupe.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
-              { template: 'Hier, nous ___ au hockey toute la journée.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
-              { template: 'Demain, vous ___ contre l\'autre école.', pronoun: 'vous', tense: 'FUTUR SIMPLE' }
-            ],
-            'Prendre': [
-              { template: 'Je ___ mon vélo pour aller à l\'école.', pronoun: 'je', tense: 'PRÉSENT' },
-              { template: 'Tu ___ le bus ou tu marches?', pronoun: 'tu', tense: 'PRÉSENT' },
-              { template: 'Mon ami ___ toujours son lunch.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
-              { template: 'Nous ___ nos vélos pour aller au parc.', pronoun: 'nous', tense: 'PRÉSENT' },
-              { template: 'Vous ___ vos skateboards?', pronoun: 'vous', tense: 'PRÉSENT' },
-              { template: 'Mes copains ___ toujours leurs ballons.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
-              { template: 'Je ___ mon équipement de hockey.', pronoun: 'je', tense: 'PRÉSENT' },
-              { template: 'Tu ___ ton casque pour faire du vélo?', pronoun: 'tu', tense: 'PRÉSENT' },
-              { template: 'Il ___ son sac de sport.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
-              { template: 'Hier, nous ___ nos planches à roulettes.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
-              { template: 'Demain, je ___ mes nouvelles chaussures de sport.', pronoun: 'je', tense: 'FUTUR SIMPLE' }
-            ],
-            'Voir': [
-              { template: 'Je ___ le match à la télé ce soir.', pronoun: 'je', tense: 'PRÉSENT' },
-              { template: 'Tu ___ cette nouvelle console de jeu?', pronoun: 'tu', tense: 'PRÉSENT' },
-              { template: 'Il ___ tous les films de super-héros.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
-              { template: 'Hier, nous ___ un film d\'action génial.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
-              { template: 'Je ___ mes amis au parc tout à l\'heure.', pronoun: 'je', tense: 'FUTUR SIMPLE' }
-            ],
-            'Savoir': [
-              { template: 'Je ___ faire du skateboard maintenant!', pronoun: 'je', tense: 'PRÉSENT' },
-              { template: 'Tu ___ nager sous l\'eau?', pronoun: 'tu', tense: 'PRÉSENT' },
-              { template: 'Mon frère ___ jouer de la batterie.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
-              { template: 'Maintenant, nous ___ faire des tricks cool.', pronoun: 'nous', tense: 'PRÉSENT' },
-              { template: 'Avant, je ne ___ pas comment dribbler.', pronoun: 'je', tense: 'IMPARFAIT' }
-            ],
-            'Partir': [
-              { template: 'Je ___ en vacances à la mer cet été.', pronoun: 'je', tense: 'PRÉSENT' },
-              { template: 'Tu ___ en camping ce weekend?', pronoun: 'tu', tense: 'PRÉSENT' },
-              { template: 'L\'équipe ___ en tournoi samedi.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
-              { template: 'Hier, nous ___ faire du vélo de montagne.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
-              { template: 'Demain, je ___ tôt pour le match.', pronoun: 'je', tense: 'FUTUR SIMPLE' }
-            ],
-            'Commencer': [
-              { template: 'Je ___ l\'entraînement à 16h.', pronoun: 'je', tense: 'PRÉSENT' },
-              { template: 'Tu ___ quand ton cours de karaté?', pronoun: 'tu', tense: 'PRÉSENT' },
-              { template: 'Le match ___ dans cinq minutes!', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
-              { template: 'Hier, nous ___ une nouvelle partie.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
-              { template: 'L\'année prochaine, je ___ le tennis.', pronoun: 'je', tense: 'FUTUR SIMPLE' }
-            ],
-            'Finir': [
-              { template: 'Je ___ toujours mes devoirs avant de jouer.', pronoun: 'je', tense: 'PRÉSENT' },
-              { template: 'Tu ___ ton entraînement à quelle heure?', pronoun: 'tu', tense: 'PRÉSENT' },
-              { template: 'Le tournoi ___ dimanche soir.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
-              { template: 'Hier, nous ___ la course en première place!', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
-              { template: 'Je ___ ce niveau du jeu bientôt.', pronoun: 'je', tense: 'FUTUR SIMPLE' }
-            ],
+        
+        'Être': [
+            // PRÉSENT
+            { template: 'Je ___ capitaine de l\'équipe.', pronoun: 'je', tense: 'PRÉSENT' },
+            { template: 'Tu ___ vraiment rapide à vélo!', pronoun: 'tu', tense: 'PRÉSENT' },
+            { template: 'Il ___ le meilleur gardien de but.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+            { template: 'Nous ___ une équipe formidable.', pronoun: 'nous', tense: 'PRÉSENT' },
+            { template: 'Vous ___ prêts pour le match?', pronoun: 'vous', tense: 'PRÉSENT' },
+            { template: 'Ils ___ les champions de la ligue.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
+            // IMPARFAIT
+            { template: 'Avant, je ___ dans l\'équipe junior.', pronoun: 'je', tense: 'IMPARFAIT' },
+            { template: 'Tu ___ toujours le plus rapide.', pronoun: 'tu', tense: 'IMPARFAIT' },
+            { template: 'Il ___ très timide avant.', pronoun: 'il/elle/on', tense: 'IMPARFAIT' },
+            { template: 'Nous ___ contents de jouer ensemble.', pronoun: 'nous', tense: 'IMPARFAIT' },
+            { template: 'Vous ___ dans la même équipe?', pronoun: 'vous', tense: 'IMPARFAIT' },
+            { template: 'Ils ___ les meilleurs joueurs.', pronoun: 'ils/elles', tense: 'IMPARFAIT' },
+            // PASSÉ COMPOSÉ
+            { template: 'Je ___ très content de gagner.', pronoun: 'je', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Tu ___ le meilleur joueur du match?', pronoun: 'tu', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Il ___ surpris par le résultat.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Hier, nous ___ les champions du tournoi!', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Vous ___ impressionnés par le match?', pronoun: 'vous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Ils ___ fiers de leur performance.', pronoun: 'ils/elles', tense: 'PASSÉ COMPOSÉ' },
+            // FUTUR SIMPLE
+            { template: 'Demain, je ___ prêt pour le match.', pronoun: 'je', tense: 'FUTUR SIMPLE' },
+            { template: 'Tu ___ dans mon équipe l\'année prochaine.', pronoun: 'tu', tense: 'FUTUR SIMPLE' },
+            { template: 'Il ___ capitaine de l\'équipe.', pronoun: 'il/elle/on', tense: 'FUTUR SIMPLE' },
+            { template: 'Nous ___ les champions cette année.', pronoun: 'nous', tense: 'FUTUR SIMPLE' },
+            { template: 'Vous ___ prêts pour le tournoi?', pronoun: 'vous', tense: 'FUTUR SIMPLE' },
+            { template: 'Ils ___ contents de participer.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' },
+            // CONDITIONNEL
+            { template: 'Je ___ content de jouer avec toi.', pronoun: 'je', tense: 'CONDITIONNEL' },
+            { template: 'Tu ___ un bon capitaine.', pronoun: 'tu', tense: 'CONDITIONNEL' },
+            { template: 'Il ___ meilleur avec plus de pratique.', pronoun: 'il/elle/on', tense: 'CONDITIONNEL' },
+            { template: 'Nous ___ champions si on gagnait.', pronoun: 'nous', tense: 'CONDITIONNEL' },
+            { template: 'Vous ___ surpris par les résultats.', pronoun: 'vous', tense: 'CONDITIONNEL' },
+            { template: 'Ils ___ fiers de gagner.', pronoun: 'ils/elles', tense: 'CONDITIONNEL' },
+            // SUBJONCTIF
+            { template: 'Il faut que je ___ plus confiant.', pronoun: 'que je', tense: 'SUBJONCTIF' },
+            { template: 'Je veux que tu ___ dans mon équipe.', pronoun: 'que tu', tense: 'SUBJONCTIF' },
+            { template: 'Il est important qu\'il ___ prêt.', pronoun: 'qu\'il/elle/on', tense: 'SUBJONCTIF' },
+            { template: 'Le coach veut que nous ___ à l\'heure.', pronoun: 'que nous', tense: 'SUBJONCTIF' },
+            { template: 'Il faut que vous ___ concentrés.', pronoun: 'que vous', tense: 'SUBJONCTIF' },
+            { template: 'Je souhaite qu\'ils ___ contents.', pronoun: 'qu\'ils/elles', tense: 'SUBJONCTIF' }
+        ],
+        
+        'Dire': [
+            // PRÉSENT
+            { template: 'Je ___ toujours la vérité à mon coach.', pronoun: 'je', tense: 'PRÉSENT' },
+            { template: 'Tu ___ quoi à ton équipe?', pronoun: 'tu', tense: 'PRÉSENT' },
+            { template: 'Le capitaine ___ de bien jouer en équipe.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+            { template: 'Nous ___ bonjour à nos adversaires.', pronoun: 'nous', tense: 'PRÉSENT' },
+            { template: 'Vous ___ que c\'est un bon match?', pronoun: 'vous', tense: 'PRÉSENT' },
+            { template: 'Mes amis ___ que je suis rapide.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
+            // IMPARFAIT
+            { template: 'Je ___ que c\'était un super match!', pronoun: 'je', tense: 'IMPARFAIT' },
+            { template: 'Tu ___ toujours des choses positives.', pronoun: 'tu', tense: 'IMPARFAIT' },
+            { template: 'Il ___ qu\'il allait gagner.', pronoun: 'il/elle/on', tense: 'IMPARFAIT' },
+            { template: 'Nous ___ que l\'équipe était forte.', pronoun: 'nous', tense: 'IMPARFAIT' },
+            { template: 'Vous ___ souvent bravo aux joueurs.', pronoun: 'vous', tense: 'IMPARFAIT' },
+            { template: 'Ils ___ toujours des encouragements.', pronoun: 'ils/elles', tense: 'IMPARFAIT' },
+            // PASSÉ COMPOSÉ
+            { template: 'Je ___ merci au coach.', pronoun: 'je', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Tu ___ la vérité hier?', pronoun: 'tu', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Il ___ qu\'il était content.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Hier, nous ___ bravo aux gagnants.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Vous ___ que c\'était un bon match?', pronoun: 'vous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Ils ___ au revoir à leurs adversaires.', pronoun: 'ils/elles', tense: 'PASSÉ COMPOSÉ' },
+            // FUTUR SIMPLE
+            { template: 'Demain, je ___ la vérité.', pronoun: 'je', tense: 'FUTUR SIMPLE' },
+            { template: 'Tu ___ ton secret bientôt?', pronoun: 'tu', tense: 'FUTUR SIMPLE' },
+            { template: 'Il ___ les résultats après le match.', pronoun: 'il/elle/on', tense: 'FUTUR SIMPLE' },
+            { template: 'Nous ___ bravo à l\'équipe gagnante.', pronoun: 'nous', tense: 'FUTUR SIMPLE' },
+            { template: 'Vous ___ votre avis après?', pronoun: 'vous', tense: 'FUTUR SIMPLE' },
+            { template: 'Ils ___ merci au coach.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' },
+            // CONDITIONNEL
+            { template: 'Je ___ oui si tu me le demandais.', pronoun: 'je', tense: 'CONDITIONNEL' },
+            { template: 'Tu ___ la vérité?', pronoun: 'tu', tense: 'CONDITIONNEL' },
+            { template: 'Il ___ non s\'il n\'était pas d\'accord.', pronoun: 'il/elle/on', tense: 'CONDITIONNEL' },
+            { template: 'Nous ___ bravo si on gagnait.', pronoun: 'nous', tense: 'CONDITIONNEL' },
+            { template: 'Vous ___ quoi à ma place?', pronoun: 'vous', tense: 'CONDITIONNEL' },
+            { template: 'Ils ___ merci s\'ils gagnaient.', pronoun: 'ils/elles', tense: 'CONDITIONNEL' },
+            // SUBJONCTIF
+            { template: 'Il faut que je ___ la vérité.', pronoun: 'que je', tense: 'SUBJONCTIF' },
+            { template: 'Je veux que tu ___ merci.', pronoun: 'que tu', tense: 'SUBJONCTIF' },
+            { template: 'Il est important qu\'il ___ bonjour.', pronoun: 'qu\'il/elle/on', tense: 'SUBJONCTIF' },
+            { template: 'Le coach veut que nous ___ bravo.', pronoun: 'que nous', tense: 'SUBJONCTIF' },
+            { template: 'Il faut que vous ___ au revoir.', pronoun: 'que vous', tense: 'SUBJONCTIF' },
+            { template: 'Je souhaite qu\'ils ___ merci.', pronoun: 'qu\'ils/elles', tense: 'SUBJONCTIF' }
+        ],
+        
+        'Prendre': [
+            // PRÉSENT
+            { template: 'Je ___ mon vélo pour aller à l\'école.', pronoun: 'je', tense: 'PRÉSENT' },
+            { template: 'Tu ___ le bus ou tu marches?', pronoun: 'tu', tense: 'PRÉSENT' },
+            { template: 'Mon ami ___ toujours son lunch.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+            { template: 'Nous ___ nos vélos pour aller au parc.', pronoun: 'nous', tense: 'PRÉSENT' },
+            { template: 'Vous ___ vos skateboards?', pronoun: 'vous', tense: 'PRÉSENT' },
+            { template: 'Mes copains ___ toujours leurs ballons.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
+            // IMPARFAIT
+            { template: 'Avant, je ___ le bus tous les jours.', pronoun: 'je', tense: 'IMPARFAIT' },
+            { template: 'Tu ___ toujours ton équipement?', pronoun: 'tu', tense: 'IMPARFAIT' },
+            { template: 'Il ___ son vélo pour aller s\'entraîner.', pronoun: 'il/elle/on', tense: 'IMPARFAIT' },
+            { template: 'Nous ___ nos planches chaque weekend.', pronoun: 'nous', tense: 'IMPARFAIT' },
+            { template: 'Vous ___ toujours vos casques?', pronoun: 'vous', tense: 'IMPARFAIT' },
+            { template: 'Ils ___ leurs vélos tous les jours.', pronoun: 'ils/elles', tense: 'IMPARFAIT' },
+            // PASSÉ COMPOSÉ
+            { template: 'Hier, je ___ mon nouveau ballon.', pronoun: 'je', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Tu ___ ton casque ce matin?', pronoun: 'tu', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Il ___ son sac de sport.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Hier, nous ___ nos planches à roulettes.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Vous ___ vos équipements?', pronoun: 'vous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Ils ___ leurs vélos pour la course.', pronoun: 'ils/elles', tense: 'PASSÉ COMPOSÉ' },
+            // FUTUR SIMPLE
+            { template: 'Demain, je ___ mes nouvelles chaussures de sport.', pronoun: 'je', tense: 'FUTUR SIMPLE' },
+            { template: 'Tu ___ ton vélo pour aller au parc?', pronoun: 'tu', tense: 'FUTUR SIMPLE' },
+            { template: 'Il ___ son équipement de hockey.', pronoun: 'il/elle/on', tense: 'FUTUR SIMPLE' },
+            { template: 'Nous ___ nos ballons demain.', pronoun: 'nous', tense: 'FUTUR SIMPLE' },
+            { template: 'Vous ___ le bus pour aller au match?', pronoun: 'vous', tense: 'FUTUR SIMPLE' },
+            { template: 'Ils ___ leurs skateboards neufs.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' },
+            // CONDITIONNEL
+            { template: 'Je ___ mon vélo s\'il ne pleuvait pas.', pronoun: 'je', tense: 'CONDITIONNEL' },
+            { template: 'Tu ___ le bus si tu étais fatigué?', pronoun: 'tu', tense: 'CONDITIONNEL' },
+            { template: 'Il ___ son équipement s\'il jouait.', pronoun: 'il/elle/on', tense: 'CONDITIONNEL' },
+            { template: 'Nous ___ nos vélos pour y aller.', pronoun: 'nous', tense: 'CONDITIONNEL' },
+            { template: 'Vous ___ vos planches si vous veniez?', pronoun: 'vous', tense: 'CONDITIONNEL' },
+            { template: 'Ils ___ leurs ballons pour jouer.', pronoun: 'ils/elles', tense: 'CONDITIONNEL' },
+            // SUBJONCTIF
+            { template: 'Il faut que je ___ mon casque.', pronoun: 'que je', tense: 'SUBJONCTIF' },
+            { template: 'Je veux que tu ___ ton équipement.', pronoun: 'que tu', tense: 'SUBJONCTIF' },
+            { template: 'Il est important qu\'il ___ son sac.', pronoun: 'qu\'il/elle/on', tense: 'SUBJONCTIF' },
+            { template: 'Le coach veut que nous ___ nos affaires.', pronoun: 'que nous', tense: 'SUBJONCTIF' },
+            { template: 'Il faut que vous ___ vos vélos.', pronoun: 'que vous', tense: 'SUBJONCTIF' },
+            { template: 'Je souhaite qu\'ils ___ leurs équipements.', pronoun: 'qu\'ils/elles', tense: 'SUBJONCTIF' }
+        ],
+        
+        'Voir': [
+            // PRÉSENT
+            { template: 'Je ___ le match à la télé ce soir.', pronoun: 'je', tense: 'PRÉSENT' },
+            { template: 'Tu ___ cette nouvelle console de jeu?', pronoun: 'tu', tense: 'PRÉSENT' },
+            { template: 'Il ___ tous les films de super-héros.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+            { template: 'Nous ___ nos amis au skatepark.', pronoun: 'nous', tense: 'PRÉSENT' },
+            { template: 'Vous ___ le tournoi samedi?', pronoun: 'vous', tense: 'PRÉSENT' },
+            { template: 'Ils ___ les matchs en direct.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
+            // IMPARFAIT
+            { template: 'Avant, je ___ tous les matchs.', pronoun: 'je', tense: 'IMPARFAIT' },
+            { template: 'Tu ___ souvent tes amis au parc?', pronoun: 'tu', tense: 'IMPARFAIT' },
+            { template: 'Il ___ les compétitions à la télé.', pronoun: 'il/elle/on', tense: 'IMPARFAIT' },
+            { template: 'Nous ___ l\'équipe jouer chaque weekend.', pronoun: 'nous', tense: 'IMPARFAIT' },
+            { template: 'Vous ___ les tournois ensemble?', pronoun: 'vous', tense: 'IMPARFAIT' },
+            { template: 'Ils ___ tous les matchs de leur équipe.', pronoun: 'ils/elles', tense: 'IMPARFAIT' },
+            // PASSÉ COMPOSÉ
+            { template: 'Hier, je ___ un match incroyable.', pronoun: 'je', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Tu ___ le film dont je parlais?', pronoun: 'tu', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Il ___ ses amis au parc.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Hier, nous ___ un film d\'action génial.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Vous ___ le tournoi hier?', pronoun: 'vous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Ils ___ la finale à la télé.', pronoun: 'ils/elles', tense: 'PASSÉ COMPOSÉ' },
+            // FUTUR SIMPLE
+            { template: 'Demain, je ___ mes amis au parc tout à l\'heure.', pronoun: 'je', tense: 'FUTUR SIMPLE' },
+            { template: 'Tu ___ le match ce soir?', pronoun: 'tu', tense: 'FUTUR SIMPLE' },
+            { template: 'Il ___ le nouveau film demain.', pronoun: 'il/elle/on', tense: 'FUTUR SIMPLE' },
+            { template: 'Nous ___ le tournoi la semaine prochaine.', pronoun: 'nous', tense: 'FUTUR SIMPLE' },
+            { template: 'Vous ___ vos amis au camp?', pronoun: 'vous', tense: 'FUTUR SIMPLE' },
+            { template: 'Ils ___ le match ensemble.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' },
+            // CONDITIONNEL
+            { template: 'Je ___ bien le match si j\'avais le temps.', pronoun: 'je', tense: 'CONDITIONNEL' },
+            { template: 'Tu ___ tes amis si tu venais.', pronoun: 'tu', tense: 'CONDITIONNEL' },
+            { template: 'Il ___ le tournoi s\'il était là.', pronoun: 'il/elle/on', tense: 'CONDITIONNEL' },
+            { template: 'Nous ___ le film ensemble.', pronoun: 'nous', tense: 'CONDITIONNEL' },
+            { template: 'Vous ___ la différence avec de la pratique.', pronoun: 'vous', tense: 'CONDITIONNEL' },
+            { template: 'Ils ___ leurs amis au parc.', pronoun: 'ils/elles', tense: 'CONDITIONNEL' },
+            // SUBJONCTIF
+            { template: 'Il faut que je ___ le coach.', pronoun: 'que je', tense: 'SUBJONCTIF' },
+            { template: 'Je veux que tu ___ le match.', pronoun: 'que tu', tense: 'SUBJONCTIF' },
+            { template: 'Il est important qu\'il ___ ses amis.', pronoun: 'qu\'il/elle/on', tense: 'SUBJONCTIF' },
+            { template: 'Le coach veut que nous ___ le tournoi.', pronoun: 'que nous', tense: 'SUBJONCTIF' },
+            { template: 'Il faut que vous ___ les résultats.', pronoun: 'que vous', tense: 'SUBJONCTIF' },
+            { template: 'Je souhaite qu\'ils ___ le match.', pronoun: 'qu\'ils/elles', tense: 'SUBJONCTIF' }
+        ],
+        'Savoir': [
+            // PRÉSENT
+            { template: 'Je ___ faire du skateboard maintenant!', pronoun: 'je', tense: 'PRÉSENT' },
+            { template: 'Tu ___ nager sous l\'eau?', pronoun: 'tu', tense: 'PRÉSENT' },
+            { template: 'Mon frère ___ jouer de la batterie.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+            { template: 'Nous ___ tous jouer au hockey.', pronoun: 'nous', tense: 'PRÉSENT' },
+            { template: 'Vous ___ faire des tricks?', pronoun: 'vous', tense: 'PRÉSENT' },
+            { template: 'Ils ___ très bien jouer au basket.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
+            // IMPARFAIT
+            { template: 'Avant, je ne ___ pas comment dribbler.', pronoun: 'je', tense: 'IMPARFAIT' },
+            { template: 'Tu ___ déjà faire du vélo?', pronoun: 'tu', tense: 'IMPARFAIT' },
+            { template: 'Il ___ nager très jeune.', pronoun: 'il/elle/on', tense: 'IMPARFAIT' },
+            { template: 'Nous ___ jouer ensemble.', pronoun: 'nous', tense: 'IMPARFAIT' },
+            { template: 'Vous ___ faire des tricks avant?', pronoun: 'vous', tense: 'IMPARFAIT' },
+            { template: 'Ils ___ tous patiner.', pronoun: 'ils/elles', tense: 'IMPARFAIT' },
+            // PASSÉ COMPOSÉ
+            { template: 'Hier, je ___ la vérité sur le match.', pronoun: 'je', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Tu ___ que l\'équipe avait gagné?', pronoun: 'tu', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Il ___ les résultats avant nous.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Maintenant, nous ___ faire des tricks cool.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Vous ___ qu\'il y avait un tournoi?', pronoun: 'vous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Ils ___ la nouvelle hier.', pronoun: 'ils/elles', tense: 'PASSÉ COMPOSÉ' },
+            // FUTUR SIMPLE
+            { template: 'Bientôt, je ___ faire un flip.', pronoun: 'je', tense: 'FUTUR SIMPLE' },
+            { template: 'Tu ___ la vérité demain.', pronoun: 'tu', tense: 'FUTUR SIMPLE' },
+            { template: 'Il ___ jouer comme un pro.', pronoun: 'il/elle/on', tense: 'FUTUR SIMPLE' },
+            { template: 'Nous ___ les résultats ce soir.', pronoun: 'nous', tense: 'FUTUR SIMPLE' },
+            { template: 'Vous ___ bientôt faire des tricks.', pronoun: 'vous', tense: 'FUTUR SIMPLE' },
+            { template: 'Ils ___ nager après les cours.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' },
+            // CONDITIONNEL
+            { template: 'Je ___ quoi faire avec plus d\'expérience.', pronoun: 'je', tense: 'CONDITIONNEL' },
+            { template: 'Tu ___ mieux si tu pratiquais.', pronoun: 'tu', tense: 'CONDITIONNEL' },
+            { template: 'Il ___ gagner s\'il essayait.', pronoun: 'il/elle/on', tense: 'CONDITIONNEL' },
+            { template: 'Nous ___ comment gagner.', pronoun: 'nous', tense: 'CONDITIONNEL' },
+            { template: 'Vous ___ quoi faire?', pronoun: 'vous', tense: 'CONDITIONNEL' },
+            { template: 'Ils ___ mieux avec un coach.', pronoun: 'ils/elles', tense: 'CONDITIONNEL' },
+          ],
+        'Aimer': [
+            // PRÉSENT
+            { template: 'Je ___ jouer au basketball avec mes amis.', pronoun: 'je', tense: 'PRÉSENT' },
+            { template: 'Tu ___ vraiment le hockey sur glace?', pronoun: 'tu', tense: 'PRÉSENT' },
+            { template: 'Mon frère ___ regarder les matchs de football.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+            { template: 'Nous ___ aller au skatepark le samedi.', pronoun: 'nous', tense: 'PRÉSENT' },
+            { template: 'Vous ___ ce nouveau jeu vidéo?', pronoun: 'vous', tense: 'PRÉSENT' },
+            { template: 'Mes copains ___ les films d\'action.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
+            // IMPARFAIT
+            { template: 'Quand j\'étais petit, je ___ grimper aux arbres.', pronoun: 'je', tense: 'IMPARFAIT' },
+            { template: 'Tu ___ jouer dehors tous les jours.', pronoun: 'tu', tense: 'IMPARFAIT' },
+            { template: 'Il ___ beaucoup le baseball avant.', pronoun: 'il/elle/on', tense: 'IMPARFAIT' },
+            { template: 'Nous ___ regarder les matchs ensemble.', pronoun: 'nous', tense: 'IMPARFAIT' },
+            { template: 'Vous ___ faire du sport?', pronoun: 'vous', tense: 'IMPARFAIT' },
+            { template: 'Ils ___ jouer au parc chaque weekend.', pronoun: 'ils/elles', tense: 'IMPARFAIT' },
+            // PASSÉ COMPOSÉ
+            { template: 'Je ___ ton idée pour le projet.', pronoun: 'je', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Tu ___ le film hier soir?', pronoun: 'tu', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Elle ___ faire du skateboard au parc.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Hier, nous ___ faire du skateboard au parc.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Vous ___ la finale du tournoi?', pronoun: 'vous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Ils ___ jouer ensemble toute la journée.', pronoun: 'ils/elles', tense: 'PASSÉ COMPOSÉ' },
+            // FUTUR SIMPLE
+            { template: 'Demain, je ___ essayer le nouveau terrain.', pronoun: 'je', tense: 'FUTUR SIMPLE' },
+            { template: 'Tu ___ ce jeu quand tu l\'essaieras.', pronoun: 'tu', tense: 'FUTUR SIMPLE' },
+            { template: 'Il ___ sûrement le camp d\'été.', pronoun: 'il/elle/on', tense: 'FUTUR SIMPLE' },
+            { template: 'Nous ___ découvrir le nouveau skatepark.', pronoun: 'nous', tense: 'FUTUR SIMPLE' },
+            { template: 'Vous ___ le tournoi la semaine prochaine.', pronoun: 'vous', tense: 'FUTUR SIMPLE' },
+            { template: 'Ils ___ participer aux compétitions.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' },
+            // CONDITIONNEL
+            { template: 'Je ___ essayer ce sport si j\'avais le temps.', pronoun: 'je', tense: 'CONDITIONNEL' },
+            { template: 'Tu ___ jouer dans cette équipe?', pronoun: 'tu', tense: 'CONDITIONNEL' },
+            { template: 'Il ___ gagner s\'il s\'entraînait plus.', pronoun: 'il/elle/on', tense: 'CONDITIONNEL' },
+            { template: 'Nous ___ voir le match si on avait des billets.', pronoun: 'nous', tense: 'CONDITIONNEL' },
+            { template: 'Vous ___ participer au tournoi?', pronoun: 'vous', tense: 'CONDITIONNEL' },
+            { template: 'Ils ___ bien avoir une console de jeu.', pronoun: 'ils/elles', tense: 'CONDITIONNEL' },
+            // SUBJONCTIF
+            { template: 'Il faut que je ___ le sport pour rester en forme.', pronoun: 'que je', tense: 'SUBJONCTIF' },
+            { template: 'Je veux que tu ___ jouer avec nous.', pronoun: 'que tu', tense: 'SUBJONCTIF' },
+            { template: 'Il est important qu\'il ___ s\'entraîner.', pronoun: 'qu\'il/elle/on', tense: 'SUBJONCTIF' },
+            { template: 'Je souhaite que nous ___ tous faire du sport.', pronoun: 'que nous', tense: 'SUBJONCTIF' },
+            { template: 'Il faut que vous ___ participer.', pronoun: 'que vous', tense: 'SUBJONCTIF' },
+            { template: 'Je veux qu\'ils ___ le jeu.', pronoun: 'qu\'ils/elles', tense: 'SUBJONCTIF' }
+        ],
+        
+        'Faire': [
+            // PRÉSENT
+            { template: 'Je ___ mes devoirs après l\'entraînement.', pronoun: 'je', tense: 'PRÉSENT' },
+            { template: 'Tu ___ du vélo ce weekend?', pronoun: 'tu', tense: 'PRÉSENT' },
+            { template: 'Il ___ de la natation tous les mercredis.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+            { template: 'Nous ___ du sport ensemble.', pronoun: 'nous', tense: 'PRÉSENT' },
+            { template: 'Vous ___ de la planche à roulettes?', pronoun: 'vous', tense: 'PRÉSENT' },
+            { template: 'Ils ___ du basketball après l\'école.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
+            // IMPARFAIT
+            { template: 'Avant, je ___ du tennis tous les jours.', pronoun: 'je', tense: 'IMPARFAIT' },
+            { template: 'Tu ___ toujours tes devoirs le soir.', pronoun: 'tu', tense: 'IMPARFAIT' },
+            { template: 'Il ___ du soccer dans son ancienne école.', pronoun: 'il/elle/on', tense: 'IMPARFAIT' },
+            { template: 'Nous ___ des compétitions chaque mois.', pronoun: 'nous', tense: 'IMPARFAIT' },
+            { template: 'Vous ___ partie de l\'équipe junior?', pronoun: 'vous', tense: 'IMPARFAIT' },
+            { template: 'Ils ___ toujours leurs exercices ensemble.', pronoun: 'ils/elles', tense: 'IMPARFAIT' },
+            // PASSÉ COMPOSÉ
+            { template: 'Hier, je ___ un tour de vélo de 10 km.', pronoun: 'je', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Tu ___ tes devoirs avant de sortir?', pronoun: 'tu', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Il ___ un excellent match hier.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Nous ___ une partie de soccer hier.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Vous ___ du skateboard au parc?', pronoun: 'vous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Ils ___ leurs exercices ce matin.', pronoun: 'ils/elles', tense: 'PASSÉ COMPOSÉ' },
+            // FUTUR SIMPLE
+            { template: 'L\'année prochaine, je ___ du karaté.', pronoun: 'je', tense: 'FUTUR SIMPLE' },
+            { template: 'Tu ___ partie de l\'équipe bientôt.', pronoun: 'tu', tense: 'FUTUR SIMPLE' },
+            { template: 'Il ___ un stage de hockey cet été.', pronoun: 'il/elle/on', tense: 'FUTUR SIMPLE' },
+            { template: 'Nous ___ un tournoi le mois prochain.', pronoun: 'nous', tense: 'FUTUR SIMPLE' },
+            { template: 'Vous ___ de la natation cet été?', pronoun: 'vous', tense: 'FUTUR SIMPLE' },
+            { template: 'Ils ___ des progrès avec l\'entraînement.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' },
+            // CONDITIONNEL
+            { template: 'Je ___ du ski si j\'habitais près des montagnes.', pronoun: 'je', tense: 'CONDITIONNEL' },
+            { template: 'Tu ___ un bon capitaine d\'équipe.', pronoun: 'tu', tense: 'CONDITIONNEL' },
+            { template: 'Il ___ mieux s\'il pratiquait plus.', pronoun: 'il/elle/on', tense: 'CONDITIONNEL' },
+            { template: 'Nous ___ un match amical ce weekend.', pronoun: 'nous', tense: 'CONDITIONNEL' },
+            { template: 'Vous ___ quoi à ma place?', pronoun: 'vous', tense: 'CONDITIONNEL' },
+            { template: 'Ils ___ une belle équipe ensemble.', pronoun: 'ils/elles', tense: 'CONDITIONNEL' },
+            // SUBJONCTIF
+            { template: 'Il faut que je ___ plus d\'exercice.', pronoun: 'que je', tense: 'SUBJONCTIF' },
+            { template: 'Je veux que tu ___ tes devoirs avant de jouer.', pronoun: 'que tu', tense: 'SUBJONCTIF' },
+            { template: 'Il est important qu\'il ___ du sport.', pronoun: 'qu\'il/elle/on', tense: 'SUBJONCTIF' },
+            { template: 'Le coach veut que nous ___ de notre mieux.', pronoun: 'que nous', tense: 'SUBJONCTIF' },
+            { template: 'Il faut que vous ___ attention pendant le match.', pronoun: 'que vous', tense: 'SUBJONCTIF' },
+            { template: 'Je souhaite qu\'ils ___ partie de l\'équipe.', pronoun: 'qu\'ils/elles', tense: 'SUBJONCTIF' }
+        ],
+        
+        'Aller': [
+            // PRÉSENT
+            { template: 'Je ___ au terrain de basketball.', pronoun: 'je', tense: 'PRÉSENT' },
+            { template: 'Tu ___ à l\'entraînement de hockey?', pronoun: 'tu', tense: 'PRÉSENT' },
+            { template: 'Mon ami ___ marquer un but!', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+            { template: 'Nous ___ au parc maintenant.', pronoun: 'nous', tense: 'PRÉSENT' },
+            { template: 'Vous ___ où jouer?', pronoun: 'vous', tense: 'PRÉSENT' },
+            { template: 'Mes frères ___ au match ce soir.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
+            // IMPARFAIT
+            { template: 'Avant, je ___ à la piscine tous les jours.', pronoun: 'je', tense: 'IMPARFAIT' },
+            { template: 'Tu ___ souvent au skatepark?', pronoun: 'tu', tense: 'IMPARFAIT' },
+            { template: 'Il ___ toujours au stade le samedi.', pronoun: 'il/elle/on', tense: 'IMPARFAIT' },
+            { template: 'Nous ___ voir les matchs ensemble.', pronoun: 'nous', tense: 'IMPARFAIT' },
+            { template: 'Vous ___ au camp d\'été chaque année?', pronoun: 'vous', tense: 'IMPARFAIT' },
+            { template: 'Ils ___ s\'entraîner tous les matins.', pronoun: 'ils/elles', tense: 'IMPARFAIT' },
+            // PASSÉ COMPOSÉ
+            { template: 'Samedi, je (garçon) ___ au match de football.', pronoun: 'je', tense: 'PASSÉ COMPOSÉ', gender: 'masculine' },
+            { template: 'Hier, ma sœur ___ au tournoi de natation.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ', gender: 'feminine' },
+            { template: 'Ce matin, nous (les garçons) ___ au skatepark.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ', gender: 'masculine' },
+            { template: 'Mes amies ___ à la piscine hier.', pronoun: 'ils/elles', tense: 'PASSÉ COMPOSÉ', gender: 'feminine' },
+            { template: 'Tu (garçon) ___ au terrain ce matin?', pronoun: 'tu', tense: 'PASSÉ COMPOSÉ', gender: 'masculine' },
+            { template: 'Vous (les filles) ___ voir le match hier?', pronoun: 'vous', tense: 'PASSÉ COMPOSÉ', gender: 'feminine' },
+            // FUTUR SIMPLE
+            { template: 'Demain, je ___ au nouveau terrain.', pronoun: 'je', tense: 'FUTUR SIMPLE' },
+            { template: 'Tu ___ au camp cet été?', pronoun: 'tu', tense: 'FUTUR SIMPLE' },
+            { template: 'Il ___ jouer au parc cet après-midi.', pronoun: 'il/elle/on', tense: 'FUTUR SIMPLE' },
+            { template: 'Nous ___ voir le match la semaine prochaine.', pronoun: 'nous', tense: 'FUTUR SIMPLE' },
+            { template: 'Vous ___ au tournoi?', pronoun: 'vous', tense: 'FUTUR SIMPLE' },
+            { template: 'Ils ___ jouer au parc.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' },
+            // CONDITIONNEL
+            { template: 'Je ___ au match si j\'avais un billet.', pronoun: 'je', tense: 'CONDITIONNEL' },
+            { template: 'Tu ___ au skatepark avec nous?', pronoun: 'tu', tense: 'CONDITIONNEL' },
+            { template: 'Il ___ mieux s\'il s\'entraînait.', pronoun: 'il/elle/on', tense: 'CONDITIONNEL' },
+            { template: 'Nous ___ voir le match si on pouvait.', pronoun: 'nous', tense: 'CONDITIONNEL' },
+            { template: 'Vous ___ au tournoi ce weekend?', pronoun: 'vous', tense: 'CONDITIONNEL' },
+            { template: 'Ils ___ jouer s\'il faisait beau.', pronoun: 'ils/elles', tense: 'CONDITIONNEL' },
+            // SUBJONCTIF
+            { template: 'Il faut que je ___ à l\'entraînement.', pronoun: 'que je', tense: 'SUBJONCTIF' },
+            { template: 'Je veux que tu ___ voir le match.', pronoun: 'que tu', tense: 'SUBJONCTIF' },
+            { template: 'Il est important qu\'il ___ s\'entraîner.', pronoun: 'qu\'il/elle/on', tense: 'SUBJONCTIF' },
+            { template: 'Le coach veut que nous ___ au tournoi.', pronoun: 'que nous', tense: 'SUBJONCTIF' },
+            { template: 'Il faut que vous ___ au match.', pronoun: 'que vous', tense: 'SUBJONCTIF' },
+            { template: 'Je souhaite qu\'ils ___ au camp cet été.', pronoun: 'qu\'ils/elles', tense: 'SUBJONCTIF' }
+        ],
+        
+        'Pouvoir': [
+            // PRÉSENT
+            { template: 'Je ___ courir très vite!', pronoun: 'je', tense: 'PRÉSENT' },
+            { template: 'Tu ___ sauter plus haut que moi?', pronoun: 'tu', tense: 'PRÉSENT' },
+            { template: 'Il ___ battre le record de l\'école.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+            { template: 'Nous ___ gagner ce match!', pronoun: 'nous', tense: 'PRÉSENT' },
+            { template: 'Vous ___ venir jouer avec nous?', pronoun: 'vous', tense: 'PRÉSENT' },
+            { template: 'Ils ___ marquer des buts incroyables.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
+            // IMPARFAIT
+            { template: 'Avant, je ___ faire 50 pompes!', pronoun: 'je', tense: 'IMPARFAIT' },
+            { template: 'Tu ___ nager longtemps sans t\'arrêter.', pronoun: 'tu', tense: 'IMPARFAIT' },
+            { template: 'Il ___ courir un marathon entier.', pronoun: 'il/elle/on', tense: 'IMPARFAIT' },
+            { template: 'Nous ___ jouer pendant des heures.', pronoun: 'nous', tense: 'IMPARFAIT' },
+            { template: 'Vous ___ participer aux compétitions?', pronoun: 'vous', tense: 'IMPARFAIT' },
+            { template: 'Ils ___ s\'entraîner tous les jours.', pronoun: 'ils/elles', tense: 'IMPARFAIT' },
+            // PASSÉ COMPOSÉ
+            { template: 'Hier, je ___ finir la course!', pronoun: 'je', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Tu ___ marquer trois buts?', pronoun: 'tu', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Il ___ battre son record personnel.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Hier, nous ___ gagner le match!', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Vous ___ voir le match hier?', pronoun: 'vous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Ils ___ terminer le parcours.', pronoun: 'ils/elles', tense: 'PASSÉ COMPOSÉ' },
+            // FUTUR SIMPLE
+            { template: 'Demain, je ___ battre le record!', pronoun: 'je', tense: 'FUTUR SIMPLE' },
+            { template: 'Tu ___ venir au match?', pronoun: 'tu', tense: 'FUTUR SIMPLE' },
+            { template: 'Il ___ participer au tournoi.', pronoun: 'il/elle/on', tense: 'FUTUR SIMPLE' },
+            { template: 'Nous ___ gagner le championnat.', pronoun: 'nous', tense: 'FUTUR SIMPLE' },
+            { template: 'Vous ___ jouer avec nous demain?', pronoun: 'vous', tense: 'FUTUR SIMPLE' },
+            { template: 'Ils ___ s\'entraîner plus dur.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' },
+            // CONDITIONNEL
+            { template: 'Si je m\'entraîne, je ___ devenir champion.', pronoun: 'je', tense: 'CONDITIONNEL' },
+            { template: 'Tu ___ gagner si tu essayais.', pronoun: 'tu', tense: 'CONDITIONNEL' },
+            { template: 'Il ___ être le meilleur avec plus de pratique.', pronoun: 'il/elle/on', tense: 'CONDITIONNEL' },
+            { template: 'Nous ___ battre cette équipe.', pronoun: 'nous', tense: 'CONDITIONNEL' },
+            { template: 'Vous ___ venir nous aider?', pronoun: 'vous', tense: 'CONDITIONNEL' },
+            { template: 'Ils ___ améliorer leurs scores.', pronoun: 'ils/elles', tense: 'CONDITIONNEL' },
+            // SUBJONCTIF
+            { template: 'Il faut que je ___ m\'améliorer.', pronoun: 'que je', tense: 'SUBJONCTIF' },
+            { template: 'Je veux que tu ___ participer.', pronoun: 'que tu', tense: 'SUBJONCTIF' },
+            { template: 'Il est important qu\'il ___ gagner.', pronoun: 'qu\'il/elle/on', tense: 'SUBJONCTIF' },
+            { template: 'Le coach souhaite que nous ___ nous qualifier.', pronoun: 'que nous', tense: 'SUBJONCTIF' },
+            { template: 'Il faut que vous ___ vous entraîner.', pronoun: 'que vous', tense: 'SUBJONCTIF' },
+            { template: 'Je veux qu\'ils ___ réussir.', pronoun: 'qu\'ils/elles', tense: 'SUBJONCTIF' }
+        ],
+        
+        'Vouloir': [
+            // PRÉSENT
+            { template: 'Je ___ devenir joueur professionnel.', pronoun: 'je', tense: 'PRÉSENT' },
+            { template: 'Tu ___ jouer dans mon équipe?', pronoun: 'tu', tense: 'PRÉSENT' },
+            { template: 'Il ___ gagner la médaille d\'or.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+            { template: 'Nous ___ un nouveau ballon.', pronoun: 'nous', tense: 'PRÉSENT' },
+            { template: 'Vous ___ essayer ce jeu?', pronoun: 'vous', tense: 'PRÉSENT' },
+            { template: 'Ils ___ participer au tournoi.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
+            // IMPARFAIT
+            { template: 'Avant, je ___ devenir astronaute.', pronoun: 'je', tense: 'IMPARFAIT' },
+            { template: 'Tu ___ toujours gagner aux jeux vidéo.', pronoun: 'tu', tense: 'IMPARFAIT' },
+            { template: 'Il ___ être le capitaine de l\'équipe.', pronoun: 'il/elle/on', tense: 'IMPARFAIT' },
+            { template: 'Nous ___ tous jouer ensemble.', pronoun: 'nous', tense: 'IMPARFAIT' },
+            { template: 'Vous ___ participer au championnat?', pronoun: 'vous', tense: 'IMPARFAIT' },
+            { template: 'Ils ___ toujours être les premiers.', pronoun: 'ils/elles', tense: 'IMPARFAIT' },
+            // PASSÉ COMPOSÉ
+            { template: 'Hier, je ___ essayer le nouveau jeu.', pronoun: 'je', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Tu ___ venir au match?', pronoun: 'tu', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Il ___ marquer un but.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Nous ___ essayer ce nouveau jeu vidéo.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Vous ___ participer au tournoi?', pronoun: 'vous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Ils ___ gagner à tout prix.', pronoun: 'ils/elles', tense: 'PASSÉ COMPOSÉ' },
+            // FUTUR SIMPLE
+            { template: 'Demain, je ___ essayer le nouveau terrain.', pronoun: 'je', tense: 'FUTUR SIMPLE' },
+            { template: 'Tu ___ venir avec nous?', pronoun: 'tu', tense: 'FUTUR SIMPLE' },
+            { template: 'Il ___ battre son record.', pronoun: 'il/elle/on', tense: 'FUTUR SIMPLE' },
+            { template: 'Nous ___ gagner le championnat.', pronoun: 'nous', tense: 'FUTUR SIMPLE' },
+            { template: 'Vous ___ jouer demain?', pronoun: 'vous', tense: 'FUTUR SIMPLE' },
+            { template: 'Ils ___ s\'inscrire au camp.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' },
+            // CONDITIONNEL
+            { template: 'Je ___ bien participer au tournoi!', pronoun: 'je', tense: 'CONDITIONNEL' },
+            { template: 'Tu ___ essayer ce sport?', pronoun: 'tu', tense: 'CONDITIONNEL' },
+            { template: 'Il ___ devenir champion.', pronoun: 'il/elle/on', tense: 'CONDITIONNEL' },
+            { template: 'Nous ___ bien avoir un nouveau ballon.', pronoun: 'nous', tense: 'CONDITIONNEL' },
+            { template: 'Vous ___ venir jouer avec nous?', pronoun: 'vous', tense: 'CONDITIONNEL' },
+            { template: 'Ils ___ tous gagner la médaille.', pronoun: 'ils/elles', tense: 'CONDITIONNEL' },
+            // SUBJONCTIF
+            { template: 'Il faut que je ___ m\'entraîner plus.', pronoun: 'que je', tense: 'SUBJONCTIF' },
+            { template: 'Je souhaite que tu ___ participer.', pronoun: 'que tu', tense: 'SUBJONCTIF' },
+            { template: 'Il est important qu\'il ___ gagner.', pronoun: 'qu\'il/elle/on', tense: 'SUBJONCTIF' },
+            { template: 'Le coach veut que nous ___ nous améliorer.', pronoun: 'que nous', tense: 'SUBJONCTIF' },
+            { template: 'Il faut que vous ___ faire de votre mieux.', pronoun: 'que vous', tense: 'SUBJONCTIF' },
+            { template: 'Je veux qu\'ils ___ réussir.', pronoun: 'qu\'ils/elles', tense: 'SUBJONCTIF' }
+        ],
+        'Avoir': [
+            // PRÉSENT
+            { template: 'Je ___ un nouveau ballon de soccer.', pronoun: 'je', tense: 'PRÉSENT' },
+            { template: 'Tu ___ un skateboard génial!', pronoun: 'tu', tense: 'PRÉSENT' },
+            { template: 'Mon ami ___ une console de jeu super cool.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+            { template: 'Nous ___ un match important demain.', pronoun: 'nous', tense: 'PRÉSENT' },
+            { template: 'Vous ___ de la chance de jouer dans cette équipe.', pronoun: 'vous', tense: 'PRÉSENT' },
+            { template: 'Ils ___ tous des vélos neufs.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
+            
+            // IMPARFAIT
+            { template: 'L\'année dernière, je ___ les meilleures chaussures de course.', pronoun: 'je', tense: 'IMPARFAIT' },
+            { template: 'Tu ___ toujours les meilleurs scores au jeu.', pronoun: 'tu', tense: 'IMPARFAIT' },
+            { template: 'Avant, il ___ peur de plonger dans la piscine.', pronoun: 'il/elle/on', tense: 'IMPARFAIT' },
+            { template: 'Nous ___ un entraînement tous les mercredis.', pronoun: 'nous', tense: 'IMPARFAIT' },
+            { template: 'Vous ___ beaucoup de temps pour jouer dehors.', pronoun: 'vous', tense: 'IMPARFAIT' },
+            { template: 'Ils ___ un terrain de basket dans leur cour.', pronoun: 'ils/elles', tense: 'IMPARFAIT' },
+            
+            // PASSÉ COMPOSÉ
+            { template: 'Hier, je ___ une médaille au tournoi!', pronoun: 'je', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Tu ___ de la chance de marquer ce but.', pronoun: 'tu', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Mon équipe ___ gagné le championnat.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Hier, nous ___ une super partie.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Vous ___ un excellent résultat au match.', pronoun: 'vous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Ils ___ trois buts pendant le match!', pronoun: 'ils/elles', tense: 'PASSÉ COMPOSÉ' },
+            
+            // FUTUR SIMPLE
+            { template: 'Demain, je ___ mon nouveau maillot d\'équipe.', pronoun: 'je', tense: 'FUTUR SIMPLE' },
+            { template: 'Tu ___ une surprise après le match.', pronoun: 'tu', tense: 'FUTUR SIMPLE' },
+            { template: 'Il ___ 12 ans la semaine prochaine.', pronoun: 'il/elle/on', tense: 'FUTUR SIMPLE' },
+            { template: 'Nous ___ un nouveau coach l\'année prochaine.', pronoun: 'nous', tense: 'FUTUR SIMPLE' },
+            { template: 'Vous ___ besoin de vous entraîner plus.', pronoun: 'vous', tense: 'FUTUR SIMPLE' },
+            { template: 'Ils ___ de nouveaux équipements bientôt.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' },
+            
+            // CONDITIONNEL
+            { template: 'Je ___ bien un nouveau vélo pour Noël.', pronoun: 'je', tense: 'CONDITIONNEL' },
+            { template: 'Tu ___ plus de chances si tu t\'entraînais.', pronoun: 'tu', tense: 'CONDITIONNEL' },
+            { template: 'Il ___ besoin d\'aide pour gagner.', pronoun: 'il/elle/on', tense: 'CONDITIONNEL' },
+            { template: 'Nous ___ plus de temps pour jouer ensemble.', pronoun: 'nous', tense: 'CONDITIONNEL' },
+            { template: 'Vous ___ intérêt à bien jouer ce match.', pronoun: 'vous', tense: 'CONDITIONNEL' },
+            { template: 'Ils ___ de meilleures notes avec plus d\'efforts.', pronoun: 'ils/elles', tense: 'CONDITIONNEL' },
+            
+            // SUBJONCTIF
+            { template: 'Il faut que je ___ plus de confiance en moi.', pronoun: 'que je', tense: 'SUBJONCTIF' },
+            { template: 'Je veux que tu ___ ton propre ballon.', pronoun: 'que tu', tense: 'SUBJONCTIF' },
+            { template: 'Il est important qu\'il ___ de bonnes chaussures.', pronoun: 'qu\'il/elle/on', tense: 'SUBJONCTIF' },
+            { template: 'Le coach veut que nous ___ l\'esprit d\'équipe.', pronoun: 'que nous', tense: 'SUBJONCTIF' },
+            { template: 'Il faut que vous ___ votre équipement complet.', pronoun: 'que vous', tense: 'SUBJONCTIF' },
+            { template: 'Je souhaite qu\'ils ___ du succès au tournoi.', pronoun: 'qu\'ils/elles', tense: 'SUBJONCTIF' }
+        ],
+
+        'Jouer': [
+            // PRÉSENT
+            { template: 'Je ___ aux jeux vidéo après l\'école.', pronoun: 'je', tense: 'PRÉSENT' },
+            { template: 'Tu ___ au basketball ce soir?', pronoun: 'tu', tense: 'PRÉSENT' },
+            { template: 'Il ___ de la guitare dans un groupe.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+            { template: 'Nous ___ au parc tous les samedis.', pronoun: 'nous', tense: 'PRÉSENT' },
+            { template: 'Vous ___ bien au hockey sur glace!', pronoun: 'vous', tense: 'PRÉSENT' },
+            { template: 'Ils ___ au soccer dans la cour d\'école.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
+            
+            // IMPARFAIT
+            { template: 'Avant, je ___ au tennis tous les jours.', pronoun: 'je', tense: 'IMPARFAIT' },
+            { template: 'Tu ___ toujours au parc avec tes amis.', pronoun: 'tu', tense: 'IMPARFAIT' },
+            { template: 'Elle ___ du piano quand elle était petite.', pronoun: 'il/elle/on', tense: 'IMPARFAIT' },
+            { template: 'Nous ___ au baseball chaque été.', pronoun: 'nous', tense: 'IMPARFAIT' },
+            { template: 'Vous ___ dans la même équipe l\'année dernière?', pronoun: 'vous', tense: 'IMPARFAIT' },
+            { template: 'Ils ___ dehors jusqu\'au coucher du soleil.', pronoun: 'ils/elles', tense: 'IMPARFAIT' },
+            
+            // PASSÉ COMPOSÉ
+            { template: 'Hier, je ___ trois parties de suite!', pronoun: 'je', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Tu ___ très bien pendant le match.', pronoun: 'tu', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Il ___ toute la soirée avec ses cousins.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Hier, nous ___ au hockey toute la journée.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Vous ___ comme des champions hier!', pronoun: 'vous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Ils ___ un match amical samedi dernier.', pronoun: 'ils/elles', tense: 'PASSÉ COMPOSÉ' },
+            
+            // FUTUR SIMPLE
+            { template: 'Demain, je ___ dans le tournoi régional.', pronoun: 'je', tense: 'FUTUR SIMPLE' },
+            { template: 'Tu ___ avec la nouvelle équipe l\'année prochaine.', pronoun: 'tu', tense: 'FUTUR SIMPLE' },
+            { template: 'Elle ___ son premier concert en juin.', pronoun: 'il/elle/on', tense: 'FUTUR SIMPLE' },
+            { template: 'Nous ___ la finale dimanche prochain.', pronoun: 'nous', tense: 'FUTUR SIMPLE' },
+            { template: 'Demain, vous ___ contre l\'autre école.', pronoun: 'vous', tense: 'FUTUR SIMPLE' },
+            { template: 'Ils ___ au championnat provincial cet été.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' },
+            
+            // CONDITIONNEL
+            { template: 'Je ___ bien dans ton équipe si tu veux.', pronoun: 'je', tense: 'CONDITIONNEL' },
+            { template: 'Tu ___ mieux avec plus de pratique.', pronoun: 'tu', tense: 'CONDITIONNEL' },
+            { template: 'On ___ toute la journée s\'il ne pleuvait pas.', pronoun: 'il/elle/on', tense: 'CONDITIONNEL' },
+            { template: 'Nous ___ ensemble si on était dans la même classe.', pronoun: 'nous', tense: 'CONDITIONNEL' },
+            { template: 'Vous ___ mieux si vous aviez un bon coach.', pronoun: 'vous', tense: 'CONDITIONNEL' },
+            { template: 'Ils ___ professionnellement s\'ils s\'entraînaient plus.', pronoun: 'ils/elles', tense: 'CONDITIONNEL' },
+            
+            // SUBJONCTIF
+            { template: 'Il faut que je ___ plus souvent pour m\'améliorer.', pronoun: 'que je', tense: 'SUBJONCTIF' },
+            { template: 'Je veux que tu ___ dans mon équipe.', pronoun: 'que tu', tense: 'SUBJONCTIF' },
+            { template: 'Il est important qu\'il ___ avec fairplay.', pronoun: 'qu\'il/elle/on', tense: 'SUBJONCTIF' },
+            { template: 'Le coach veut que nous ___ ensemble.', pronoun: 'que nous', tense: 'SUBJONCTIF' },
+            { template: 'Il faut que vous ___ de votre mieux.', pronoun: 'que vous', tense: 'SUBJONCTIF' },
+            { template: 'Je souhaite qu\'ils ___ dans notre équipe.', pronoun: 'qu\'ils/elles', tense: 'SUBJONCTIF' }
+        ],f
+          'Prendre': [
+            // PRÉSENT
+            { template: 'Je ___ mon vélo pour aller à l\'école.', pronoun: 'je', tense: 'PRÉSENT' },
+            { template: 'Tu ___ le bus ou tu marches?', pronoun: 'tu', tense: 'PRÉSENT' },
+            { template: 'Mon ami ___ toujours son lunch.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+            { template: 'Nous ___ nos vélos pour aller au parc.', pronoun: 'nous', tense: 'PRÉSENT' },
+            { template: 'Vous ___ vos skateboards?', pronoun: 'vous', tense: 'PRÉSENT' },
+            { template: 'Mes copains ___ toujours leurs ballons.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
+            
+            // IMPARFAIT
+            { template: 'Avant, je ___ le bus tous les jours.', pronoun: 'je', tense: 'IMPARFAIT' },
+            { template: 'Tu ___ toujours ton équipement?', pronoun: 'tu', tense: 'IMPARFAIT' },
+            { template: 'Il ___ son vélo pour aller s\'entraîner.', pronoun: 'il/elle/on', tense: 'IMPARFAIT' },
+            { template: 'Nous ___ nos planches chaque weekend.', pronoun: 'nous', tense: 'IMPARFAIT' },
+            { template: 'Vous ___ toujours vos casques?', pronoun: 'vous', tense: 'IMPARFAIT' },
+            { template: 'Ils ___ leurs vélos tous les jours.', pronoun: 'ils/elles', tense: 'IMPARFAIT' },
+            
+            // PASSÉ COMPOSÉ
+            { template: 'Hier, je ___ mon nouveau ballon.', pronoun: 'je', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Tu ___ ton casque ce matin?', pronoun: 'tu', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Il ___ son sac de sport.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Hier, nous ___ nos planches à roulettes.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Vous ___ vos équipements?', pronoun: 'vous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Ils ___ leurs vélos pour la course.', pronoun: 'ils/elles', tense: 'PASSÉ COMPOSÉ' },
+            
+            // FUTUR SIMPLE
+            { template: 'Demain, je ___ mes nouvelles chaussures de sport.', pronoun: 'je', tense: 'FUTUR SIMPLE' },
+            { template: 'Tu ___ ton vélo pour aller au parc?', pronoun: 'tu', tense: 'FUTUR SIMPLE' },
+            { template: 'Il ___ son équipement de hockey.', pronoun: 'il/elle/on', tense: 'FUTUR SIMPLE' },
+            { template: 'Nous ___ nos ballons demain.', pronoun: 'nous', tense: 'FUTUR SIMPLE' },
+            { template: 'Vous ___ le bus pour aller au match?', pronoun: 'vous', tense: 'FUTUR SIMPLE' },
+            { template: 'Ils ___ leurs skateboards neufs.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' },
+            
+            // CONDITIONNEL
+            { template: 'Je ___ mon vélo s\'il ne pleuvait pas.', pronoun: 'je', tense: 'CONDITIONNEL' },
+            { template: 'Tu ___ le bus si tu étais fatigué?', pronoun: 'tu', tense: 'CONDITIONNEL' },
+            { template: 'Il ___ son équipement s\'il jouait.', pronoun: 'il/elle/on', tense: 'CONDITIONNEL' },
+            { template: 'Nous ___ nos vélos pour y aller.', pronoun: 'nous', tense: 'CONDITIONNEL' },
+            { template: 'Vous ___ vos planches si vous veniez?', pronoun: 'vous', tense: 'CONDITIONNEL' },
+            { template: 'Ils ___ leurs ballons pour jouer.', pronoun: 'ils/elles', tense: 'CONDITIONNEL' },
+            
+            // SUBJONCTIF
+            { template: 'Il faut que je ___ mon casque.', pronoun: 'que je', tense: 'SUBJONCTIF' },
+            { template: 'Je veux que tu ___ ton équipement.', pronoun: 'que tu', tense: 'SUBJONCTIF' },
+            { template: 'Il est important qu\'il ___ son sac.', pronoun: 'qu\'il/elle/on', tense: 'SUBJONCTIF' },
+            { template: 'Le coach veut que nous ___ nos affaires.', pronoun: 'que nous', tense: 'SUBJONCTIF' },
+            { template: 'Il faut que vous ___ vos vélos.', pronoun: 'que vous', tense: 'SUBJONCTIF' },
+            { template: 'Je souhaite qu\'ils ___ leurs équipements.', pronoun: 'qu\'ils/elles', tense: 'SUBJONCTIF' }
+        ],
+
+        'Commencer': [
+            // PRÉSENT
+            { template: 'Je ___ l\'entraînement à 16h.', pronoun: 'je', tense: 'PRÉSENT' },
+            { template: 'Tu ___ quand ton cours de karaté?', pronoun: 'tu', tense: 'PRÉSENT' },
+            { template: 'Le match ___ dans cinq minutes!', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+            { template: 'Nous ___ toujours par un échauffement.', pronoun: 'nous', tense: 'PRÉSENT' },
+            { template: 'Vous ___ à quelle heure demain?', pronoun: 'vous', tense: 'PRÉSENT' },
+            { template: 'Ils ___ leur saison de hockey en septembre.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
+            
+            // IMPARFAIT
+            { template: 'Avant, je ___ mes devoirs avant de jouer.', pronoun: 'je', tense: 'IMPARFAIT' },
+            { template: 'Tu ___ toujours par t\'échauffer?', pronoun: 'tu', tense: 'IMPARFAIT' },
+            { template: 'Le tournoi ___ toujours à 9h le samedi.', pronoun: 'il/elle/on', tense: 'IMPARFAIT' },
+            { template: 'Nous ___ nos matchs en retard l\'année dernière.', pronoun: 'nous', tense: 'IMPARFAIT' },
+            { template: 'Vous ___ vos entraînements tôt le matin.', pronoun: 'vous', tense: 'IMPARFAIT' },
+            { template: 'Ils ___ toujours par perdre, mais finissaient forts!', pronoun: 'ils/elles', tense: 'IMPARFAIT' },
+            
+            // PASSÉ COMPOSÉ
+            { template: 'Hier, je ___ un nouveau jeu vidéo.', pronoun: 'je', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Tu ___ à jouer à quelle heure?', pronoun: 'tu', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Le match ___ en retard à cause de la pluie.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Hier, nous ___ une nouvelle partie.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Vous ___ votre entraînement sans moi?', pronoun: 'vous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Ils ___ le tournoi avec une victoire!', pronoun: 'ils/elles', tense: 'PASSÉ COMPOSÉ' },
+            
+            // FUTUR SIMPLE
+            { template: 'Demain, je ___ mes cours de natation.', pronoun: 'je', tense: 'FUTUR SIMPLE' },
+            { template: 'Tu ___ à jouer bientôt?', pronoun: 'tu', tense: 'FUTUR SIMPLE' },
+            { template: 'Le camp ___ lundi prochain.', pronoun: 'il/elle/on', tense: 'FUTUR SIMPLE' },
+            { template: 'Nous ___ la saison en octobre.', pronoun: 'nous', tense: 'FUTUR SIMPLE' },
+            { template: 'Vous ___ votre tournoi ce weekend?', pronoun: 'vous', tense: 'FUTUR SIMPLE' },
+            { template: 'Ils ___ leurs compétitions en janvier.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' },
+            
+            // CONDITIONNEL
+            { template: 'Je ___ bien à jouer si j\'avais le temps.', pronoun: 'je', tense: 'CONDITIONNEL' },
+            { template: 'Tu ___ par quoi si tu étais coach?', pronoun: 'tu', tense: 'CONDITIONNEL' },
+            { template: 'Le match ___ plus tôt s\'il faisait beau.', pronoun: 'il/elle/on', tense: 'CONDITIONNEL' },
+            { template: 'Nous ___ à gagner avec un bon entraînement.', pronoun: 'nous', tense: 'CONDITIONNEL' },
+            { template: 'Vous ___ quand si vous pouviez choisir?', pronoun: 'vous', tense: 'CONDITIONNEL' },
+            { template: 'Ils ___ par s\'échauffer s\'ils étaient sérieux.', pronoun: 'ils/elles', tense: 'CONDITIONNEL' },
+            
+            // SUBJONCTIF
+            { template: 'Il faut que je ___ à m\'entraîner sérieusement.', pronoun: 'que je', tense: 'SUBJONCTIF' },
+            { template: 'Je veux que tu ___ par t\'échauffer.', pronoun: 'que tu', tense: 'SUBJONCTIF' },
+            { template: 'Il est important que le match ___ à l\'heure.', pronoun: 'qu\'il/elle/on', tense: 'SUBJONCTIF' },
+            { template: 'Le coach veut que nous ___ par un jogging.', pronoun: 'que nous', tense: 'SUBJONCTIF' },
+            { template: 'Il faut que vous ___ tout de suite!', pronoun: 'que vous', tense: 'SUBJONCTIF' },
+            { template: 'Je souhaite qu\'ils ___ bien la saison.', pronoun: 'qu\'ils/elles', tense: 'SUBJONCTIF' }
+        ],
+        'Finir': [
+            // PRÉSENT
+            { template: 'Je ___ toujours mes devoirs avant de jouer.', pronoun: 'je', tense: 'PRÉSENT' },
+            { template: 'Tu ___ ton entraînement à quelle heure?', pronoun: 'tu', tense: 'PRÉSENT' },
+            { template: 'Le tournoi ___ dimanche soir.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+            { template: 'Nous ___ toujours par gagner!', pronoun: 'nous', tense: 'PRÉSENT' },
+            { template: 'Vous ___ vos matchs en beauté.', pronoun: 'vous', tense: 'PRÉSENT' },
+            { template: 'Ils ___ leur saison en première place.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
+            
+            // IMPARFAIT
+            { template: 'Avant, je ___ toujours dernier dans les courses.', pronoun: 'je', tense: 'IMPARFAIT' },
+            { template: 'Tu ___ tes parties très tard le soir.', pronoun: 'tu', tense: 'IMPARFAIT' },
+            { template: 'Il ___ ses exercices avant tout le monde.', pronoun: 'il/elle/on', tense: 'IMPARFAIT' },
+            { template: 'Nous ___ nos entraînements épuisés.', pronoun: 'nous', tense: 'IMPARFAIT' },
+            { template: 'Vous ___ toujours en retard l\'année dernière.', pronoun: 'vous', tense: 'IMPARFAIT' },
+            { template: 'Ils ___ leurs matchs très contents.', pronoun: 'ils/elles', tense: 'IMPARFAIT' },
+            
+            // PASSÉ COMPOSÉ
+            { template: 'Hier, je ___ premier dans la course!', pronoun: 'je', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Tu ___ ton jeu vidéo ce matin?', pronoun: 'tu', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Elle ___ ses devoirs avant le match.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Hier, nous ___ la course en première place!', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Vous ___ votre tournoi champions!', pronoun: 'vous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Ils ___ l\'entraînement très fatigués.', pronoun: 'ils/elles', tense: 'PASSÉ COMPOSÉ' },
+            
+            // FUTUR SIMPLE
+            { template: 'Demain, je ___ ce niveau du jeu.', pronoun: 'je', tense: 'FUTUR SIMPLE' },
+            { template: 'Tu ___ tes exercices avant midi?', pronoun: 'tu', tense: 'FUTUR SIMPLE' },
+            { template: 'Le match ___ vers 18h ce soir.', pronoun: 'il/elle/on', tense: 'FUTUR SIMPLE' },
+            { template: 'Nous ___ notre saison en beauté.', pronoun: 'nous', tense: 'FUTUR SIMPLE' },
+            { template: 'Vous ___ premiers si vous vous entraînez.', pronoun: 'vous', tense: 'FUTUR SIMPLE' },
+            { template: 'Ils ___ leur projet pour le tournoi.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' },
+            
+            // CONDITIONNEL
+            { template: 'Je ___ bien premier si je courais plus vite.', pronoun: 'je', tense: 'CONDITIONNEL' },
+            { template: 'Tu ___ tes devoirs plus vite avec de l\'aide.', pronoun: 'tu', tense: 'CONDITIONNEL' },
+            { template: 'Il ___ champion avec plus de pratique.', pronoun: 'il/elle/on', tense: 'CONDITIONNEL' },
+            { template: 'Nous ___ par gagner si on jouait mieux.', pronoun: 'nous', tense: 'CONDITIONNEL' },
+            { template: 'Vous ___ à temps si vous commenciez maintenant.', pronoun: 'vous', tense: 'CONDITIONNEL' },
+            { template: 'Ils ___ le tournoi s\'ils s\'entraînaient plus.', pronoun: 'ils/elles', tense: 'CONDITIONNEL' },
+            
+            // SUBJONCTIF
+            { template: 'Il faut que je ___ mes exercices avant le match.', pronoun: 'que je', tense: 'SUBJONCTIF' },
+            { template: 'Je veux que tu ___ tes devoirs d\'abord.', pronoun: 'que tu', tense: 'SUBJONCTIF' },
+            { template: 'Il est important qu\'il ___ ce qu\'il commence.', pronoun: 'qu\'il/elle/on', tense: 'SUBJONCTIF' },
+            { template: 'Le coach veut que nous ___ forts cette saison.', pronoun: 'que nous', tense: 'SUBJONCTIF' },
+            { template: 'Il faut que vous ___ votre entraînement.', pronoun: 'que vous', tense: 'SUBJONCTIF' },
+            { template: 'Je souhaite qu\'ils ___ premiers du championnat.', pronoun: 'qu\'ils/elles', tense: 'SUBJONCTIF' }
+        ],
+
+        'Manger': [
+            // PRÉSENT
+            { template: 'Je ___ toujours avant le match.', pronoun: 'je', tense: 'PRÉSENT' },
+            { template: 'Tu ___ une pizza après l\'entraînement?', pronoun: 'tu', tense: 'PRÉSENT' },
+            { template: 'Mon équipe ___ ensemble après les matchs.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+            { template: 'Nous ___ des fruits pendant la pause.', pronoun: 'nous', tense: 'PRÉSENT' },
+            { template: 'Vous ___ à la cafétéria de l\'école?', pronoun: 'vous', tense: 'PRÉSENT' },
+            { template: 'Ils ___ toujours des collations santé.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
+            
+            // IMPARFAIT
+            { template: 'Avant, je ___ trop de bonbons.', pronoun: 'je', tense: 'IMPARFAIT' },
+            { template: 'Tu ___ toujours avec ton équipe?', pronoun: 'tu', tense: 'IMPARFAIT' },
+            { template: 'Il ___ beaucoup de légumes pour être fort.', pronoun: 'il/elle/on', tense: 'IMPARFAIT' },
+            { template: 'Nous ___ ensemble tous les midis.', pronoun: 'nous', tense: 'IMPARFAIT' },
+            { template: 'Vous ___ au restaurant après les tournois?', pronoun: 'vous', tense: 'IMPARFAIT' },
+            { template: 'Ils ___ des pâtes avant chaque match.', pronoun: 'ils/elles', tense: 'IMPARFAIT' },
+            
+            // PASSÉ COMPOSÉ
+            { template: 'Hier, je ___ trois tranches de pizza!', pronoun: 'je', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Tu ___ tout ton lunch ce midi?', pronoun: 'tu', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Elle ___ une grosse salade avant le match.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Hier, nous ___ des hamburgers après le tournoi.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Vous ___ au restaurant hier soir?', pronoun: 'vous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Ils ___ tous leurs collations pendant la partie.', pronoun: 'ils/elles', tense: 'PASSÉ COMPOSÉ' },
+            
+            // FUTUR SIMPLE
+            { template: 'Demain, je ___ des pâtes pour avoir de l\'énergie.', pronoun: 'je', tense: 'FUTUR SIMPLE' },
+            { template: 'Tu ___ avec nous après le match?', pronoun: 'tu', tense: 'FUTUR SIMPLE' },
+            { template: 'Il ___ léger avant la compétition.', pronoun: 'il/elle/on', tense: 'FUTUR SIMPLE' },
+            { template: 'Nous ___ une pizza pour célébrer la victoire.', pronoun: 'nous', tense: 'FUTUR SIMPLE' },
+            { template: 'Vous ___ au resto ce soir?', pronoun: 'vous', tense: 'FUTUR SIMPLE' },
+            { template: 'Ils ___ ensemble après l\'entraînement.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' },
+            
+            // CONDITIONNEL
+            { template: 'Je ___ bien une glace s\'il faisait chaud.', pronoun: 'je', tense: 'CONDITIONNEL' },
+            { template: 'Tu ___ plus si tu avais encore faim?', pronoun: 'tu', tense: 'CONDITIONNEL' },
+            { template: 'Il ___ mieux s\'il faisait attention.', pronoun: 'il/elle/on', tense: 'CONDITIONNEL' },
+            { template: 'Nous ___ ensemble si on avait le temps.', pronoun: 'nous', tense: 'CONDITIONNEL' },
+            { template: 'Vous ___ au restaurant si vous gagniez?', pronoun: 'vous', tense: 'CONDITIONNEL' },
+            { template: 'Ils ___ plus sainement s\'ils voulaient performer.', pronoun: 'ils/elles', tense: 'CONDITIONNEL' },
+            
+            // SUBJONCTIF
+            { template: 'Il faut que je ___ plus de fruits.', pronoun: 'que je', tense: 'SUBJONCTIF' },
+            { template: 'Je veux que tu ___ avant le match.', pronoun: 'que tu', tense: 'SUBJONCTIF' },
+            { template: 'Il est important qu\'il ___ bien pour avoir de l\'énergie.', pronoun: 'qu\'il/elle/on', tense: 'SUBJONCTIF' },
+            { template: 'Le coach veut que nous ___ sainement.', pronoun: 'que nous', tense: 'SUBJONCTIF' },
+            { template: 'Il faut que vous ___ avant l\'entraînement.', pronoun: 'que vous', tense: 'SUBJONCTIF' },
+            { template: 'Je souhaite qu\'ils ___ tous ensemble.', pronoun: 'qu\'ils/elles', tense: 'SUBJONCTIF' }
+        ],
+        'Devoir': [
+            // PRÉSENT
+            { template: 'Je ___ m\'entraîner tous les jours.', pronoun: 'je', tense: 'PRÉSENT' },
+            { template: 'Tu ___ porter ton casque pour faire du vélo.', pronoun: 'tu', tense: 'PRÉSENT' },
+            { template: 'Il ___ arriver à l\'heure pour le match.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+            { template: 'Nous ___ finir nos devoirs avant de jouer.', pronoun: 'nous', tense: 'PRÉSENT' },
+            { template: 'Vous ___ respecter les règles du jeu.', pronoun: 'vous', tense: 'PRÉSENT' },
+            { template: 'Ils ___ s\'échauffer avant chaque match.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
+            
+            // IMPARFAIT
+            { template: 'Avant, je ___ rentrer à 18h tous les soirs.', pronoun: 'je', tense: 'IMPARFAIT' },
+            { template: 'Tu ___ toujours aider ton équipe.', pronoun: 'tu', tense: 'IMPARFAIT' },
+            { template: 'Il ___ s\'entraîner trois fois par semaine.', pronoun: 'il/elle/on', tense: 'IMPARFAIT' },
+            { template: 'Nous ___ porter notre uniforme chaque match.', pronoun: 'nous', tense: 'IMPARFAIT' },
+            { template: 'Vous ___ courir 5 km à chaque entraînement.', pronoun: 'vous', tense: 'IMPARFAIT' },
+            { template: 'Ils ___ être au stade à 9h le samedi.', pronoun: 'ils/elles', tense: 'IMPARFAIT' },
+            
+            // PASSÉ COMPOSÉ
+            { template: 'Hier, je ___ refaire tout l\'exercice.', pronoun: 'je', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Tu ___ rester sur le banc pendant le match?', pronoun: 'tu', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Il ___ arrêter de jouer à cause d\'une blessure.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Hier, nous ___ courir 5 kilomètres.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Vous ___ annuler votre sortie à cause de la pluie?', pronoun: 'vous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Ils ___ recommencer le match à zéro.', pronoun: 'ils/elles', tense: 'PASSÉ COMPOSÉ' },
+            
+            // FUTUR SIMPLE
+            { template: 'Demain, je ___ me lever tôt pour l\'entraînement.', pronoun: 'je', tense: 'FUTUR SIMPLE' },
+            { template: 'Tu ___ apporter ton équipement complet.', pronoun: 'tu', tense: 'FUTUR SIMPLE' },
+            { template: 'Il ___ jouer de son mieux pour gagner.', pronoun: 'il/elle/on', tense: 'FUTUR SIMPLE' },
+            { template: 'Nous ___ gagner ce match important.', pronoun: 'nous', tense: 'FUTUR SIMPLE' },
+            { template: 'Vous ___ vous entraîner plus dur cette semaine.', pronoun: 'vous', tense: 'FUTUR SIMPLE' },
+            { template: 'Ils ___ pratiquer davantage pour le tournoi.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' },
+            
+            // CONDITIONNEL
+            { template: 'Je ___ m\'améliorer pour le prochain tournoi.', pronoun: 'je', tense: 'CONDITIONNEL' },
+            { template: 'Tu ___ faire plus attention pendant le jeu.', pronoun: 'tu', tense: 'CONDITIONNEL' },
+            { template: 'Il ___ manger mieux pour avoir plus d\'énergie.', pronoun: 'il/elle/on', tense: 'CONDITIONNEL' },
+            { template: 'Nous ___ nous entraîner ensemble plus souvent.', pronoun: 'nous', tense: 'CONDITIONNEL' },
+            { template: 'Vous ___ écouter les conseils du coach.', pronoun: 'vous', tense: 'CONDITIONNEL' },
+            { template: 'Ils ___ pratiquer tous les jours pour progresser.', pronoun: 'ils/elles', tense: 'CONDITIONNEL' },
+            
+            // SUBJONCTIF
+            { template: 'Il faut que je ___ finir mes devoirs d\'abord.', pronoun: 'que je', tense: 'SUBJONCTIF' },
+            { template: 'Je veux que tu ___ venir à l\'entraînement.', pronoun: 'que tu', tense: 'SUBJONCTIF' },
+            { template: 'Il est important qu\'il ___ respecter les règles.', pronoun: 'qu\'il/elle/on', tense: 'SUBJONCTIF' },
+            { template: 'Le coach veut que nous ___ nous améliorer.', pronoun: 'que nous', tense: 'SUBJONCTIF' },
+            { template: 'Il faut que vous ___ être à l\'heure.', pronoun: 'que vous', tense: 'SUBJONCTIF' },
+            { template: 'Je souhaite qu\'ils ___ gagner ce match.', pronoun: 'qu\'ils/elles', tense: 'SUBJONCTIF' }
+        ],
+
+        'Finir': [
+            // PRÉSENT
+            { template: 'Je ___ toujours mes devoirs avant de jouer.', pronoun: 'je', tense: 'PRÉSENT' },
+            { template: 'Tu ___ ton entraînement à quelle heure?', pronoun: 'tu', tense: 'PRÉSENT' },
+            { template: 'Le tournoi ___ dimanche soir.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
+            { template: 'Nous ___ toujours par gagner!', pronoun: 'nous', tense: 'PRÉSENT' },
+            { template: 'Vous ___ vos matchs en beauté.', pronoun: 'vous', tense: 'PRÉSENT' },
+            { template: 'Ils ___ leur saison en première place.', pronoun: 'ils/elles', tense: 'PRÉSENT' },
+            
+            // IMPARFAIT
+            { template: 'Avant, je ___ toujours dernier dans les courses.', pronoun: 'je', tense: 'IMPARFAIT' },
+            { template: 'Tu ___ tes parties très tard le soir.', pronoun: 'tu', tense: 'IMPARFAIT' },
+            { template: 'Il ___ ses exercices avant tout le monde.', pronoun: 'il/elle/on', tense: 'IMPARFAIT' },
+            { template: 'Nous ___ nos entraînements épuisés.', pronoun: 'nous', tense: 'IMPARFAIT' },
+            { template: 'Vous ___ toujours en retard l\'année dernière.', pronoun: 'vous', tense: 'IMPARFAIT' },
+            { template: 'Ils ___ leurs matchs très contents.', pronoun: 'ils/elles', tense: 'IMPARFAIT' },
+            
+            // PASSÉ COMPOSÉ
+            { template: 'Hier, je ___ premier dans la course!', pronoun: 'je', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Tu ___ ton jeu vidéo ce matin?', pronoun: 'tu', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Elle ___ ses devoirs avant le match.', pronoun: 'il/elle/on', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Hier, nous ___ la course en première place!', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Vous ___ votre tournoi champions!', pronoun: 'vous', tense: 'PASSÉ COMPOSÉ' },
+            { template: 'Ils ___ l\'entraînement très fatigués.', pronoun: 'ils/elles', tense: 'PASSÉ COMPOSÉ' },
+            
+            // FUTUR SIMPLE
+            { template: 'Demain, je ___ ce niveau du jeu.', pronoun: 'je', tense: 'FUTUR SIMPLE' },
+            { template: 'Tu ___ tes exercices avant midi?', pronoun: 'tu', tense: 'FUTUR SIMPLE' },
+            { template: 'Le match ___ vers 18h ce soir.', pronoun: 'il/elle/on', tense: 'FUTUR SIMPLE' },
+            { template: 'Nous ___ notre saison en beauté.', pronoun: 'nous', tense: 'FUTUR SIMPLE' },
+            { template: 'Vous ___ premiers si vous vous entraînez.', pronoun: 'vous', tense: 'FUTUR SIMPLE' },
+            { template: 'Ils ___ leur projet pour le tournoi.', pronoun: 'ils/elles', tense: 'FUTUR SIMPLE' },
+            
+            // CONDITIONNEL
+            { template: 'Je ___ bien premier si je courais plus vite.', pronoun: 'je', tense: 'CONDITIONNEL' },
+            { template: 'Tu ___ tes devoirs plus vite avec de l\'aide.', pronoun: 'tu', tense: 'CONDITIONNEL' },
+            { template: 'Il ___ champion avec plus de pratique.', pronoun: 'il/elle/on', tense: 'CONDITIONNEL' },
+            { template: 'Nous ___ par gagner si on jouait mieux.', pronoun: 'nous', tense: 'CONDITIONNEL' },
+            { template: 'Vous ___ à temps si vous commenciez maintenant.', pronoun: 'vous', tense: 'CONDITIONNEL' },
+            { template: 'Ils ___ le tournoi s\'ils s\'entraînaient plus.', pronoun: 'ils/elles', tense: 'CONDITIONNEL' },
+            
+            // SUBJONCTIF
+            { template: 'Il faut que je ___ mes exercices avant le match.', pronoun: 'que je', tense: 'SUBJONCTIF' },
+            { template: 'Je veux que tu ___ tes devoirs d\'abord.', pronoun: 'que tu', tense: 'SUBJONCTIF' },
+            { template: 'Il est important qu\'il ___ ce qu\'il commence.', pronoun: 'qu\'il/elle/on', tense: 'SUBJONCTIF' },
+            { template: 'Le coach veut que nous ___ forts cette saison.', pronoun: 'que nous', tense: 'SUBJONCTIF' },
+            { template: 'Il faut que vous ___ votre entraînement.', pronoun: 'que vous', tense: 'SUBJONCTIF' },
+            { template: 'Je souhaite qu\'ils ___ premiers du championnat.', pronoun: 'qu\'ils/elles', tense: 'SUBJONCTIF' }
+        ],
             'Manger': [
               { template: 'Je ___ toujours avant le match.', pronoun: 'je', tense: 'PRÉSENT' },
               { template: 'Tu ___ une pizza après l\'entraînement?', pronoun: 'tu', tense: 'PRÉSENT' },
@@ -506,34 +1242,7 @@
               { template: 'Hier, nous ___ courir 5 kilomètres.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
               { template: 'Je ___ m\'améliorer pour le prochain tournoi.', pronoun: 'je', tense: 'CONDITIONNEL' }
             ],
-            'Finir': [
-              { template: 'Je ___ toujours mes devoirs avant de jouer.', pronoun: 'je', tense: 'PRÉSENT' },
-              { template: 'Tu ___ ton entraînement à quelle heure?', pronoun: 'tu', tense: 'PRÉSENT' },
-              { template: 'Le tournoi ___ dimanche soir.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
-              { template: 'Hier, nous ___ la course en première place!', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
-              { template: 'Je ___ ce niveau du jeu bientôt.', pronoun: 'je', tense: 'FUTUR SIMPLE' }
-            ],
-            'Manger': [
-              { template: 'Je ___ toujours avant le match.', pronoun: 'je', tense: 'PRÉSENT' },
-              { template: 'Tu ___ une pizza après l\'entraînement?', pronoun: 'tu', tense: 'PRÉSENT' },
-              { template: 'Mon équipe ___ ensemble après les matchs.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
-              { template: 'Hier, nous ___ des hamburgers après le tournoi.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
-              { template: 'Demain, je ___ chez mon copain.', pronoun: 'je', tense: 'FUTUR SIMPLE' }
-            ],
-            'Devoir': [
-              { template: 'Je ___ m\'entraîner tous les jours.', pronoun: 'je', tense: 'PRÉSENT' },
-              { template: 'Tu ___ porter ton casque pour faire du vélo.', pronoun: 'tu', tense: 'PRÉSENT' },
-              { template: 'Il ___ arriver à l\'heure pour le match.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
-              { template: 'Hier, nous ___ courir 5 kilomètres.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
-              { template: 'Je ___ m\'améliorer pour le prochain tournoi.', pronoun: 'je', tense: 'CONDITIONNEL' }
-            ],
-            'Dire': [
-              { template: 'Je ___ toujours la vérité à mon coach.', pronoun: 'je', tense: 'PRÉSENT' },
-              { template: 'Tu ___ quoi à ton équipe?', pronoun: 'tu', tense: 'PRÉSENT' },
-              { template: 'Le capitaine ___ de bien jouer en équipe.', pronoun: 'il/elle/on', tense: 'PRÉSENT' },
-              { template: 'Hier, nous ___ bravo aux gagnants.', pronoun: 'nous', tense: 'PASSÉ COMPOSÉ' },
-              { template: 'Je ___ que c\'était un super match!', pronoun: 'je', tense: 'IMPARFAIT' }
-            ]
+            
           };
 
           const generateContextQuiz = () => {
